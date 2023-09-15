@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Do not forget</string>
+    <string name="app_version">version %s %s (build %d)</string>
+    <string name="no_notes">no notes</string>
+    <string name="no_history">history is empty</string>
+    <string name="sorting">sorting</string>
+    <string name="history">history</string>
+    <string name="syncing">syncing</string>
+    <string name="change_theme">change the theme</string>
+    <string name="buy">buy</string>
+    <string name="about_app">about</string>
+    <string name="create">Create</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="restore">Restore</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
+    <string name="choose">OK</string>
+    <string name="ok">OK</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="year">y</string>
+    <string name="month">m</string>
+    <string name="day">d</string>
+    <string name="hour">h</string>
+    <string name="minute">m</string>
+    <string name="color_choose">Choose the color</string>
+    <string name="date_choose">Choose the date</string>
+    <string name="time_choose">Choose the time</string>
+    <string name="light_theme">light theme</string>
+    <string name="dark_theme">dark theme</string>
+
+    <string name="hint_note">Do not forget…</string>
+    <string name="question_restore">Restore the note?</string>
+    <string name="question_delete">Delete the note?</string>
+    <string name="few_seconds">Just a few seconds…</string>
+    <string name="request_for_evaluation">We always strive to bring our products to the ideal. Therefore, we will be very grateful for your assessment, feedback and suggestions. Thanks!</string>
+    <string name="rate_now">Rate</string>
+    <string name="rate_later">Later</string>
+    <string name="android_kills_app">Due to its features, the Android system may periodically kill our application. For proper operation, we recommend that you add the application to the white list in the phone settings or the application optimizer.</string>
+
+    <string name="tv_about_app">«Do not forget» – as often do we tell ourselves this phrase in the hope of remembering something important at the right time. And as often do we still forget about it. Now you can be calm – we will definitely remind you about everything.</string>
+    <string name="tv_no_auth">Please, sign in to your Google account. You can then sync reminders between your devices.</string>
+    <string name="tv_about_sync">From time to time your account will be synced automatically. You can also do it yourself at any time.</string>
+    <string name="tv_last_sync">Last synchronization:</string>
+    <string name="tv_copyright" translatable="false">Copyright © Bruimafia</string>
+    <string name="tv_no_sync">no yet</string>
+    <string name="tv_privacy_policy">Privacy Policy</string>
+
+    <string name="btn_color_choose">Choose the background color</string>
+    <string name="btn_sign_in">Sign in with Google</string>
+    <string name="btn_sync">Synchronize</string>
+    <string name="btn_sync_complete">Good</string>
+    <string name="btn_sync_error">Error</string>
+    <string name="btn_sync_progress">Please wait…</string>
+    <string name="tbtn_text_off">unpinned from the screen</string>
+    <string name="tbtn_text_on">pinned to the screen</string>
+
+    <string name="snackbar_reset_app">Great, now to fully work, restart the application</string>
+    <string name="snackbar_no_change_theme">Unfortunately, the theme change is only available with Android 9.0 Pie</string>
+    <string name="snackbar_order_by_id">Notes are sorted by creation date</string>
+    <string name="snackbar_order_by_relevance">Notes are sorted by relevance</string>
+
+    <!-- ключи -->
+    <string name="privacy_policy_link" translatable="false">https://bruimafia.github.io/AppPrivacyPolicy/do_not_forget</string>
+    <string name="billing_license_key" translatable="false">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwSPHnlZtz0nnnlyDg9n9f3QOSZoFANcZNr8/jONsqkESPbHFkqSTFQ3qKnKU9mu0ALgn2suEBbWB/vPeDC4eFhVKMb6jDUHKFd4aIIpHJjEe9EUhB8cc4O1gsCc5k10852nMVJ/Cm4ETUnySWIR+GAuHyXmZ2q5dhnYn/9ipNqj8EUuLSEQq3nwBQhKySxRuckHhSJU9EYxdC9gtviXEkYpWS/FhFcXAqgmvLuyyDrn951+O5LKClJ4S2aJEYeaBv0zFL2dtMTGUTCI1IPlBWP5Kpb8jWQl+8bIMXiNn2brX0PNmgJd40CnkkyR9MYu7CPxpYJPeBO1umFUXcfJc6QIDAQAB</string>
+    <string name="billing_product_id" translatable="false">full_app</string>
+    <string name="gso_request_id_token" translatable="false">272252145652-498b023dpch0j7krubvqjl18lnuqins5.apps.googleusercontent.com</string>
+    <string name="appMetrica_api_key" translatable="false">ce68ba25-8b20-4d00-a2d5-c93a1e4d9ec9</string>
+    <string name="oneSignal_app_id" translatable="false">0e90de60-0f0b-4c7d-a135-253cccce743e</string>
+    <string name="ads_application_id" translatable="false">ca-app-pub-5561095249269562~1926850993</string>
+    <string name="banner_edit_ad_unit_id" translatable="false">ca-app-pub-5561095249269562/7151751699</string>
+    <string name="banner_tasks_ad_unit_id" translatable="false">ca-app-pub-5561095249269562/6030241715</string>
+    <string name="banner_history_ad_unit_id" translatable="false">ca-app-pub-5561095249269562/1233526475</string>
+    <!--    <string name="test_banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>-->
+    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-5561095249269562/5044463108</string>
+    <!--    <string name="test_interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>-->
+</resources>

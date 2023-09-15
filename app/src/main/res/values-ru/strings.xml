@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Не забыть бы</string>
+    <string name="app_version">версия %s %s (сборка %d)</string>
+    <string name="no_notes">нет записей</string>
+    <string name="no_history">история пуста</string>
+    <string name="sorting">сортировка</string>
+    <string name="history">история</string>
+    <string name="syncing">синхронизация</string>
+    <string name="change_theme">сменить тему</string>
+    <string name="buy">купить</string>
+    <string name="about_app">о программе</string>
+    <string name="create">Создать</string>
+    <string name="update">Обновить</string>
+    <string name="delete">Удалить</string>
+    <string name="restore">Восстановить</string>
+    <string name="cancel">Отмена</string>
+    <string name="clear">Очистить</string>
+    <string name="choose">Выбрать</string>
+    <string name="ok">Хорошо</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="year">г</string>
+    <string name="month">м</string>
+    <string name="day">д</string>
+    <string name="hour">ч</string>
+    <string name="minute">м</string>
+    <string name="color_choose">Выберите цвет</string>
+    <string name="date_choose">Выберите дату</string>
+    <string name="time_choose">Выберите время</string>
+    <string name="light_theme">светлая тема</string>
+    <string name="dark_theme">темная тема</string>
+
+    <string name="hint_note">Не забыть бы…</string>
+    <string name="question_restore">Восстановить запись?</string>
+    <string name="question_delete">Удалить запись?</string>
+    <string name="few_seconds">Всего несколько секунд…</string>
+    <string name="request_for_evaluation">Мы всегда стремимся доводить наши продукты до идеала. Поэтому будем очень благодарны за Ваши оценку, отзыв и предложения. Спасибо!</string>
+    <string name="rate_now">Оценить</string>
+    <string name="rate_later">Позже</string>
+    <string name="android_kills_app">Из-за своих особенностей система Android может периодически "убивать" наше приложение. Для правильной работы рекомендуем Вам добавить приложение в белый список в настройках телефона либо оптимизатора приложений.</string>
+
+    <string name="tv_about_app">«Не забыть бы» – как часто мы говорим себе эту фразу в надежде вспомнить о чём-то важном в нужный момент. И как часто мы всё-таки забываем об этом. Теперь Вы можете быть спокойны – мы обязательно обо всём Вам напомним.</string>
+    <string name="tv_no_auth">Пожалуйста, войдите в Ваш аккаунт Google. После этого Вы сможете синхронизировать напоминания между своими устройствами.</string>
+    <string name="tv_about_sync">Время от времени Ваш аккаунт будет синхронизироваться автоматически. Однако Вы можете сделать это сами в любое время.</string>
+    <string name="tv_last_sync">Последняя синхронизация:</string>
+    <string name="tv_no_sync">отсутствует</string>
+    <string name="tv_privacy_policy">Политика конфиденциальности</string>
+
+    <string name="btn_color_choose">Выбрать цвет фона</string>
+    <string name="btn_sign_in">Войти через Google</string>
+    <string name="btn_sync">Синхронизировать</string>
+    <string name="btn_sync_complete">Удачно</string>
+    <string name="btn_sync_error">Ошибка</string>
+    <string name="btn_sync_progress">Синхронизация…</string>
+    <string name="tbtn_text_off">откреплено от экрана</string>
+    <string name="tbtn_text_on">закреплено на экране</string>
+
+    <string name="snackbar_reset_app">Отлично, теперь для полноценной работы перезапустите приложение</string>
+    <string name="snackbar_no_change_theme">К сожалению, смена темы доступна только с Android 9.0 Pie</string>
+    <string name="snackbar_order_by_id">Записи отсортированы по дате создания</string>
+    <string name="snackbar_order_by_relevance">Записи отсортированы по актуальности</string>
+</resources>

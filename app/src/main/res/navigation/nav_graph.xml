@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="ru.bruimafia.donotforget.fragment.tasks.TasksFragment"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_tasksFragment_to_editFragment"
+            app:destination="@id/editFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim">
+            <argument
+                android:name="noteID"
+                android:defaultValue="-1L"
+                app:argType="long" />
+        </action>
+        <action
+            android:id="@+id/action_tasksFragment_to_historyFragment"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_tasksFragment_to_syncDialog"
+            app:destination="@id/syncDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_tasksFragment_to_buyDialog"
+            app:destination="@id/buyDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_tasksFragment_to_aboutDialog"
+            app:destination="@id/aboutDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="ru.bruimafia.donotforget.fragment.edit.EditFragment"
+        tools:layout="@layout/fragment_edit">
+        <argument
+            android:name="noteID"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="ru.bruimafia.donotforget.fragment.history.HistoryFragment"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_editFragment"
+            app:destination="@id/editFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim">
+            <argument
+                android:name="noteID"
+                android:defaultValue="-1L"
+                app:argType="long" />
+        </action>
+    </fragment>
+
+    <dialog
+        android:id="@+id/aboutDialog"
+        android:name="ru.bruimafia.donotforget.dialog.about.AboutDialog"
+        tools:layout="@layout/dialog_about" />
+
+    <dialog
+        android:id="@+id/buyDialog"
+        android:name="ru.bruimafia.donotforget.dialog.buy.BuyDialog"
+        tools:layout="@layout/dialog_buy" />
+
+    <dialog
+        android:id="@+id/syncDialog"
+        android:name="ru.bruimafia.donotforget.dialog.sync.SyncDialog"
+        tools:layout="@layout/dialog_sync" />
+
+</navigation>

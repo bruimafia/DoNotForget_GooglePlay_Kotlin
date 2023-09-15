@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.DoNotForget" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/base_dark</item>
+        <item name="colorPrimaryVariant">@color/base_dark</item>
+        <item name="colorOnPrimary">@color/grey_400</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/accent_200_dark</item>
+        <item name="colorSecondaryVariant">@color/accent_200_dark</item>
+        <item name="colorOnSecondary">@color/grey_50</item>
+        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:colorBackground">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar" >false</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <item name="android:panelFullBackground">@color/base_dark</item>
+        <item name="android:itemBackground">@color/base_dark</item>
+        <item name="actionOverflowMenuStyle">@style/CMOptionsMenu</item>
+    </style>
+
+    <style name="CMOptionsMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/base</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+</resources>

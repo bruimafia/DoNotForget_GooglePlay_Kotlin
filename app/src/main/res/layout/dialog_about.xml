@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="view"
+            type="ru.bruimafia.donotforget.dialog.about.AboutDialog" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/_15sdp"
+        tools:context=".dialog.about.AboutDialog">
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:padding="@dimen/_10sdp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_icon" />
+
+        <TextView
+            android:id="@+id/tv_appVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/_12sdp"
+            app:setVersion="@{view.isFullVersion}"
+            tools:text="версия 1.0.5 pro (сборка 22)" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="@string/tv_about_app"
+            android:textSize="@dimen/_12sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_vkLink"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:onClick="@{v -> view.onVkLink()}"
+                android:padding="@dimen/_5sdp"
+                app:srcCompat="@drawable/ic_link_vk" />
+
+            <ImageView
+                android:id="@+id/img_googleplayLink"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:onClick="@{v -> view.onGooglePlayLink()}"
+                android:padding="@dimen/_10sdp"
+                app:srcCompat="@drawable/ic_link_googleplay" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_privacyPolicyLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{v -> view.onPrivacyPolicyLink()}"
+            android:text="@string/tv_privacy_policy"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tv_copyright"
+            android:textSize="@dimen/_12sdp" />
+
+    </LinearLayout>
+</layout>
