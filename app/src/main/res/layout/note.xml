@@ -25,15 +25,24 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_7sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_7sdp">
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/vFix"
+                android:layout_height="0dp"
+                android:layout_width="@dimen/_4sdp"
+                android:background="?attr/colorSecondary"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="@{note.isFix ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <LinearLayout
                 android:id="@+id/ll_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_7sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/rounded_corner"
                 android:gravity="center"
@@ -69,8 +78,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/rounded_corner"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -105,13 +112,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/rounded_corner"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/_6sdp"
-                android:visibility="@{note.isFix ? View.VISIBLE : View.GONE}"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/ll_time"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ll_time">
@@ -129,10 +136,10 @@
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
                 android:text="@{note.title, default = `It's just some insignificant text`}"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="parent"

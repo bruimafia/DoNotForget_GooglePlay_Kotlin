@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/iv_appIcon"
-        android:textColor="@color/colorOnPrimary"
+        android:textColor="@color/black"
         tools:text="Сходить завтра в магазин и купить там торт, мороженое, шпроты, хлеб, молоко, пироги, суп и салат" />
 
 </RelativeLayout>

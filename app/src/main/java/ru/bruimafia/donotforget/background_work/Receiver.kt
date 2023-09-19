@@ -69,7 +69,7 @@ class Receiver : BroadcastReceiver() {
 
     private fun startRepeating() {
         val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CHECK)
-        val penIntent = PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val penIntent = PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         if (penIntent != null) {
             val manager = App.instance.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
             manager.cancel(penIntent)

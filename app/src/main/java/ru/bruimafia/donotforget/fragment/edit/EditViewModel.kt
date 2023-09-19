@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.repository.Repository
 import ru.bruimafia.donotforget.repository.local.Note
 import java.util.Calendar
@@ -13,6 +14,7 @@ class EditViewModel(private val repository: Repository) : ViewModel() {
 
     var note: ObservableField<Note> = ObservableField<Note>()
     var isFullVersion = ObservableField(false)
+    var colorBackground = ObservableField(com.google.android.material.R.attr.backgroundColor)
 
     fun setNote(id: Long) {
         if (note.get() == null && id != -1L)

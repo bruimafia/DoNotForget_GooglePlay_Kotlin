@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/backgroundColor"
     android:padding="@dimen/_15sdp">
 
     <ImageView
@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_alarm" />
+        app:srcCompat="@drawable/ic_alarm"
+        app:tint="?attr/colorOnBackground" />
 
     <TextView
         android:id="@+id/text"
@@ -37,7 +38,7 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/ok"
-        android:textColor="@color/colorSecondary"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

@@ -64,7 +64,14 @@ class SingleActivity : AppCompatActivity() {
 
     private fun startRepeating() {
         val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CHECK)
-        val penIntent = PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val penIntent: PendingIntent? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.getBroadcast(
+            App.instance,
+            Constants.RC_ALARM,
+            intent,
+            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        ) else PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
         if (penIntent != null) {
             val manager = App.instance.getSystemService(ALARM_SERVICE) as AlarmManager
             manager.cancel(penIntent)

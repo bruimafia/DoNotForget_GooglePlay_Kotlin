@@ -26,8 +26,8 @@ class BindingAdapters {
 
     @BindingAdapter("app:setExpandedDate")
     fun setExpandedDate(view: TextView, milliseconds: Long) {
-        if (milliseconds != 0L) view.text =
-            getExpandedDateOf(milliseconds) else view.setText(R.string.date)
+        if (milliseconds != 0L) view.text = getExpandedDateOf(milliseconds)
+        else view.setText(R.string.date)
     }
 
     private fun getExpandedDateOf(milliseconds: Long): String? {
@@ -47,39 +47,32 @@ class BindingAdapters {
 
     @BindingAdapter("app:backgroundColor")
     fun backgroundColor(view: MaterialCardView, color: Int) {
-        if (color != 0) view.setCardBackgroundColor(color) else view.setCardBackgroundColor(
-            view.context.resources.getColor(R.color.white)
-        )
+        if (color != 0) view.setCardBackgroundColor(color)
+        else view.setCardBackgroundColor(view.context.resources.getColor(R.color.white))
     }
 
     @BindingAdapter("app:textColor")
     fun textColor(view: TextView, color: Int) {
-        if (isDarkBackground(color) && color != 0) view.setTextColor(
-            view.context.resources.getColor(
-                R.color.colorLightText
-            )
-        ) else view.setTextColor(view.context.resources.getColor(R.color.colorOnPrimary))
+        if (isDarkBackground(color) && color != 0) view.setTextColor(view.context.resources.getColor(R.color.colorLightText))
+        else view.setTextColor(view.context.resources.getColor(R.color.white))
     }
 
     @BindingAdapter("app:imageCalendarColor")
     fun imageCalendarColor(view: ImageView, color: Int) {
-        if (isDarkBackground(color) && color != 0) view.setImageResource(R.drawable.ic_calendar_light) else view.setImageResource(
-            R.drawable.ic_calendar
-        )
+        if (isDarkBackground(color) && color != 0) view.setImageResource(R.drawable.ic_calendar_light)
+        else view.setImageResource(R.drawable.ic_calendar)
     }
 
     @BindingAdapter("app:imageClockColor")
     fun imageClockColor(view: ImageView, color: Int) {
-        if (isDarkBackground(color) && color != 0) view.setImageResource(R.drawable.ic_clock_light) else view.setImageResource(
-            R.drawable.ic_clock
-        )
+        if (isDarkBackground(color) && color != 0) view.setImageResource(R.drawable.ic_clock_light)
+        else view.setImageResource(R.drawable.ic_clock)
     }
 
     // определение оттенка цвета фона
     private fun isDarkBackground(color: Int): Boolean {
         // if (darkness > 0.5) -> темный цвет фона
-        val darkness =
-            1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
+        val darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
         return darkness > 0.5
     }
 
@@ -101,10 +94,7 @@ class BindingAdapters {
 
     private fun transformationTimeLastSync(time: Long): String? {
         return if (time == 0L) App.instance.resources
-            .getString(R.string.tv_no_sync) else SimpleDateFormat(
-            "EEEE, dd MMMM y HH:mm",
-            Locale.getDefault()
-        ).format(Date(time))
+            .getString(R.string.tv_no_sync) else SimpleDateFormat("EEEE, dd MMMM y HH:mm", Locale.getDefault()).format(Date(time))
     }
 
 }

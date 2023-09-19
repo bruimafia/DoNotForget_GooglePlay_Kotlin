@@ -52,7 +52,6 @@ class TasksFragment : Fragment(), OnClickOptionsMenu {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayShowTitleEnabled(false)
 
         return binding.root
     }

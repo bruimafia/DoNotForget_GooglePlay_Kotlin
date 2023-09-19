@@ -3,9 +3,8 @@
     <item android:state_pressed="false" android:state_selected="false">
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
-            <solid android:color="@color/orange_300" />
-            <stroke android:width="0dp"
-                android:color="@color/black"/>
+            <solid android:color="@color/colorSecondaryVariantLight" />
+            <stroke android:width="0dp" android:color="@color/colorOnSecondaryLight"/>
         </shape>
     </item>
 </selector>

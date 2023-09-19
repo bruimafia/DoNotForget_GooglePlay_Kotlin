@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/backgroundColor"
     android:padding="@dimen/_15sdp">
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:text="@string/rate_later"
-        android:textColor="@color/grey_400"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toStartOf="@id/btn_ok"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/rate_now"
-        android:textColor="@color/colorSecondary"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

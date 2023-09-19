@@ -93,9 +93,9 @@ class NotificationsWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, 
             App.instance,
             note.id.toInt(),
             intent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         ) else PendingIntent.getBroadcast(
-            App.instance, note.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT
+            App.instance, note.id.toInt(), intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         if (penIntent != null) {
             val manager = App.instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -110,10 +110,8 @@ class NotificationsWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, 
             App.instance,
             note.id.toInt(),
             intent,
-            PendingIntent.FLAG_IMMUTABLE
-        ) else PendingIntent.getBroadcast(
-            App.instance, note.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT
-        )
+            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        ) else PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         if (penIntent != null) {
             val manager = App.instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             manager.cancel(penIntent)

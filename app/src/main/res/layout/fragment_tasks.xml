@@ -21,31 +21,15 @@
         android:layout_height="match_parent"
         tools:context=".fragment.tasks.TasksFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSecondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimaryVariant">
-
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    style="@style/ToolbarName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name" />
-
-            </com.google.android.material.appbar.MaterialToolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/ToolbarTheme" />
 
         <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
             android:layout_width="match_parent"
@@ -54,8 +38,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-            app:spb_color="@color/colorSecondary"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:spb_color="?attr/colorSecondaryVariant"
             app:spb_mirror_mode="true"
             app:spb_progressiveStart_activated="true"
             app:spb_reversed="true"
@@ -72,7 +56,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:listitem="@layout/note" />
 
         <LinearLayout
@@ -85,17 +69,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <ImageView
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_void" />
+                android:src="@drawable/ic_void"
+                app:tint="?attr/colorOnBackground" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/colorOnBackground"
                 android:layout_margin="@dimen/_10sdp"
                 android:text="@string/no_notes"
                 android:textSize="@dimen/_15sdp" />
@@ -109,7 +95,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/extended_fab"
@@ -119,8 +105,11 @@
             android:onClick="@{v -> view.onCreateNote()}"
             android:text="@string/create"
             app:icon="@drawable/ic_create"
+            app:iconTint="?attr/colorOnBackground"
+            android:textColor="?attr/colorOnBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:backgroundTint="?attr/colorSecondaryVariant"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SmallComponent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
