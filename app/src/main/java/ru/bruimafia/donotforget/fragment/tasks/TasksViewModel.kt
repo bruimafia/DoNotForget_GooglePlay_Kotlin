@@ -3,27 +3,55 @@ package ru.bruimafia.donotforget.fragment.tasks
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.reactivex.Flowable
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import kotlinx.coroutines.launch
+import ru.bruimafia.donotforget.App
+import ru.bruimafia.donotforget.background_work.Notification
+import ru.bruimafia.donotforget.background_work.NotificationWorker
 import ru.bruimafia.donotforget.repository.Repository
 import ru.bruimafia.donotforget.repository.local.Note
+import ru.bruimafia.donotforget.util.Constants
 
 class TasksViewModel(private val repository: Repository) : ViewModel() {
 
-    private lateinit var notes: Flowable<List<Note>>
     var notesForScreen = ObservableField<List<Note>>()
     var isOrderById = ObservableField(true)
     var isLoading = ObservableField(true)
     var isFullVersion = ObservableField(false)
 
-    fun getNotes(): Flowable<List<Note>> {
-        return if (isOrderById.get() == true)
-            repository.getAllOrderById()
+    fun getNotes() = liveData {
+        if (isOrderById.get() == true)
+            repository.getAllOrderById().collect {
+                emit(it)
+            }
         else
-            repository.getAllOrderByRelevance()
+            repository.getAllOrderByRelevance().collect {
+                emit(it)
+            }
     }
 
-    fun delete(id: Long) {
+    fun delete(id: Long) = viewModelScope.launch {
         repository.delete(id)
+
+        startCheckNotificationsWorker(Constants.ACTION_DELETE, id)
+        Notification().deleteNotification(id)
+    }
+
+    private fun startCheckNotificationsWorker(action: String, id: Long) {
+        val data = Data.Builder()
+            .putString("action", action)
+            .putLong(Constants.NOTE_ID, id)
+            .build()
+        val workRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+            .addTag(Constants.WORKER_CHECK_TAG)
+            .setInputData(data)
+            //.setInitialDelay(5, TimeUnit.MINUTES)
+            .build()
+        WorkManager.getInstance(App.instance).enqueue(workRequest)
     }
 
 }

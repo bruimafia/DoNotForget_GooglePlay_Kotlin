@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,9 +25,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import ru.bruimafia.donotforget.App
 import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.databinding.FragmentTasksBinding
@@ -36,11 +32,9 @@ import ru.bruimafia.donotforget.repository.local.Note
 import ru.bruimafia.donotforget.util.Constants
 import ru.bruimafia.donotforget.util.NoteAdapter
 import ru.bruimafia.donotforget.util.SharedPreferencesManager
-import java.util.concurrent.TimeUnit
 
 class TasksFragment : Fragment(), OnClickOptionsMenu {
 
-    private val disposable = CompositeDisposable()
     private val viewModel: TasksViewModel by viewModels {
         TasksViewModelFactory((App.instance).repository)
     }
@@ -62,6 +56,7 @@ class TasksFragment : Fragment(), OnClickOptionsMenu {
 
         binding.view = this
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         navController = findNavController(view)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -93,16 +88,12 @@ class TasksFragment : Fragment(), OnClickOptionsMenu {
 
         viewModel.isOrderById.set(SharedPreferencesManager.isOrderById)
 
-        disposable.add(viewModel.getNotes()
-            .subscribeOn(Schedulers.io())
-            .delay(100, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { viewModel.isLoading.set(true) }
-            .subscribe { notes ->
-                adapter.setData(notes.toMutableList())
-                viewModel.notesForScreen.set(notes)
-                viewModel.isLoading.set(false)
-            })
+        viewModel.getNotes().observe(viewLifecycleOwner) {
+            viewModel.isLoading.set(true)
+            adapter.setData(it.toMutableList())
+            viewModel.notesForScreen.set(it)
+            viewModel.isLoading.set(false)
+        }
 
         showFirstLaunch()
     }
@@ -119,19 +110,18 @@ class TasksFragment : Fragment(), OnClickOptionsMenu {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.onSort -> {
+                onChangeSort()
+                return true
+            }
 
-        if (item.itemId == R.id.onSort) {
-            onChangeSort()
-            return true
-        }
+            R.id.onChangeTheme -> {
+                onChangeTheme()
+                return true
+            }
 
-        if (item.itemId == R.id.onChangeTheme) {
-            onChangeTheme()
-            return true
-        }
-
-        if (item.itemId == R.id.onBuy) {
-            return true
+            R.id.onBuy -> return true
         }
 
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item)
@@ -174,16 +164,14 @@ class TasksFragment : Fragment(), OnClickOptionsMenu {
         val orderById: Boolean = SharedPreferencesManager.isOrderById
         SharedPreferencesManager.isOrderById = !orderById
         viewModel.isOrderById.set(!orderById)
-        disposable.add(viewModel.getNotes()
-            .subscribeOn(Schedulers.io())
-            .delay(100, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { viewModel.isLoading.set(true) }
-            .subscribe { notes ->
-                adapter.setData(notes.toMutableList())
-                viewModel.notesForScreen.set(notes)
-                viewModel.isLoading.set(false)
-            })
+
+        viewModel.getNotes().observe(viewLifecycleOwner) {
+            viewModel.isLoading.set(true)
+            adapter.setData(it.toMutableList())
+            viewModel.notesForScreen.set(it)
+            viewModel.isLoading.set(false)
+        }
+
         notificationAboutOrder(!orderById)
     }
 

@@ -1,46 +1,58 @@
 package ru.bruimafia.donotforget.fragment.edit
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import ru.bruimafia.donotforget.R
+import androidx.lifecycle.viewModelScope
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import kotlinx.coroutines.launch
+import ru.bruimafia.donotforget.App
+import ru.bruimafia.donotforget.background_work.NotificationWorker
 import ru.bruimafia.donotforget.repository.Repository
 import ru.bruimafia.donotforget.repository.local.Note
+import ru.bruimafia.donotforget.util.Constants
 import java.util.Calendar
 
 class EditViewModel(private val repository: Repository) : ViewModel() {
 
     var note: ObservableField<Note> = ObservableField<Note>()
     var isFullVersion = ObservableField(false)
-    var colorBackground = ObservableField(com.google.android.material.R.attr.backgroundColor)
 
-    fun setNote(id: Long) {
+    fun setNote(id: Long)= viewModelScope.launch {
         if (note.get() == null && id != -1L)
-            repository[id]
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess { n: Note -> note.set(n) }
-                .subscribe()
+            note.set(repository.get(id))
         if (note.get() == null && id == -1L)
             note.set(Note())
     }
 
-    fun create(note: Note) {
-        repository.create(note)
+    fun create(note: Note) = viewModelScope.launch {
+        val id = repository.create(note)
+        Log.d(Constants.TAG, "id ---> $id")
+        startNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, id)
+//        if (note.isFix)
+//            Notification().createNotification(note)
     }
 
-    fun update(note: Note) {
+    fun update(note: Note) = viewModelScope.launch {
         repository.update(note)
+        startNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, note.id)
+//        Notification().deleteNotification(note.id)
+//        if (note.isFix)
+//            Notification().createNotification(note)
     }
 
-    fun delete(id: Long) {
+    fun delete(id: Long) = viewModelScope.launch {
         repository.delete(id)
+        startNotificationsWorker(Constants.ACTION_DELETE, id)
     }
 
-    fun recover(id: Long) {
+    fun recover(id: Long) = viewModelScope.launch {
         repository.recover(id)
+        startNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, id)
     }
 
     fun setDate(milliseconds: Long) {
@@ -66,6 +78,20 @@ class EditViewModel(private val repository: Repository) : ViewModel() {
 
     private fun checkCurrentDate(): Long {
         return if (note.get()?.date == 0L) dateInMidnight(System.currentTimeMillis()) else dateInMidnight(note.get()!!.date)
+    }
+
+    private fun startNotificationsWorker(action: String, id: Long) {
+        val data = Data.Builder()
+            .putString("action", action)
+            .putLong(Constants.NOTE_ID, id)
+            .build()
+
+        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .addTag(Constants.WORKER_CHECK_TAG)
+            .setInputData(data)
+            .build()
+
+        WorkManager.getInstance(App.instance).enqueue(workRequest)
     }
 
 }

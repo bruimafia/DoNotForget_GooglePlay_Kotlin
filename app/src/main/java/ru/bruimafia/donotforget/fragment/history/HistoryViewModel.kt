@@ -3,10 +3,17 @@ package ru.bruimafia.donotforget.fragment.history
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.reactivex.Flowable
-import ru.bruimafia.donotforget.fragment.tasks.TasksViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import kotlinx.coroutines.launch
+import ru.bruimafia.donotforget.App
+import ru.bruimafia.donotforget.background_work.NotificationWorker
 import ru.bruimafia.donotforget.repository.Repository
 import ru.bruimafia.donotforget.repository.local.Note
+import ru.bruimafia.donotforget.util.Constants
 
 
 class HistoryViewModel(private val repository: Repository) : ViewModel() {
@@ -15,16 +22,33 @@ class HistoryViewModel(private val repository: Repository) : ViewModel() {
     var isLoading = ObservableField(true)
     var isFullVersion = ObservableField(false)
 
-    fun getNotesInHistory(): Flowable<List<Note>> {
-        return repository.getHistory()
+    fun getNotesInHistory() = liveData {
+        repository.getHistory().collect {
+            emit(it)
+        }
     }
 
-    fun clear() {
+    fun clearHistory() = viewModelScope.launch {
         repository.clearHistory()
     }
 
-    fun recover(id: Long) {
+    fun recover(id: Long) = viewModelScope.launch {
         repository.recover(id)
+
+        startCheckNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, id)
+    }
+
+    private fun startCheckNotificationsWorker(action: String, id: Long) {
+        val data = Data.Builder()
+            .putString("action", action)
+            .putLong(Constants.NOTE_ID, id)
+            .build()
+        val workRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+            .addTag(Constants.WORKER_CHECK_TAG)
+            .setInputData(data)
+            //.setInitialDelay(5, TimeUnit.MINUTES)
+            .build()
+        WorkManager.getInstance(App.instance).enqueue(workRequest)
     }
 
 }

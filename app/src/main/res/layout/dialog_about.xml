@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/_12sdp"
-            app:setVersion="@{view.isFullVersion}"
+            app:setAppVersion="@{view.isFullVersion}"
             tools:text="версия 1.0.5 pro (сборка 22)" />
 
         <TextView

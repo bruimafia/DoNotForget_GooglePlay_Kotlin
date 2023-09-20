@@ -46,7 +46,7 @@
     <string name="tv_no_sync">отсутствует</string>
     <string name="tv_privacy_policy">Политика конфиденциальности</string>
 
-    <string name="btn_color_choose">Выбрать цвет фона</string>
+    <string name="btn_color_choose">Выбрать цвет фона или текста</string>
     <string name="btn_sign_in">Войти через Google</string>
     <string name="btn_sync">Синхронизировать</string>
     <string name="btn_sync_complete">Удачно</string>

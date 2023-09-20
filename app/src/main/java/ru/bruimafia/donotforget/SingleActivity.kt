@@ -14,11 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import ru.bruimafia.donotforget.background_work.Notification
 import ru.bruimafia.donotforget.background_work.Receiver
-import ru.bruimafia.donotforget.background_work.worker.NotificationsWorker
+import ru.bruimafia.donotforget.background_work.NotificationWorker
 import ru.bruimafia.donotforget.util.Constants
+import java.util.concurrent.TimeUnit
 
 
 class SingleActivity : AppCompatActivity() {
@@ -50,10 +53,17 @@ class SingleActivity : AppCompatActivity() {
         val data = Data.Builder()
             .putString("action", Constants.ACTION_START)
             .build()
-        val workRequest = OneTimeWorkRequest.Builder(NotificationsWorker::class.java)
+
+        val workRequest1 = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
             .addTag(Constants.WORKER_CHECK_TAG)
             .setInputData(data)
             .build()
+
+        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .addTag(Constants.WORKER_CHECK_TAG)
+            .setInputData(data)
+            .build()
+
         WorkManager.getInstance(App.instance).enqueue(workRequest)
     }
 
@@ -65,17 +75,16 @@ class SingleActivity : AppCompatActivity() {
     private fun startRepeating() {
         val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CHECK)
 
-        val penIntent: PendingIntent? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.getBroadcast(
-            App.instance,
-            Constants.RC_ALARM,
-            intent,
-            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        ) else PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val penIntent: PendingIntent? =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            else
+                PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (penIntent != null) {
             val manager = App.instance.getSystemService(ALARM_SERVICE) as AlarmManager
             manager.cancel(penIntent)
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), Constants.REPEAT_INTERVAL.toLong(), penIntent)
+            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), Constants.REPEAT_INTERVAL.toLong(), penIntent)
         }
         Log.d(Constants.TAG, "SingleActivity: запущен startRepeating")
     }

@@ -52,14 +52,14 @@
     <color name="colorBlackout">#10000000</color>
     <color name="colorLightText">#CCFFFFFF</color>
 
-    <color name="positiveButtonTextColor">@color/green_200</color>
-    <color name="negativeButtonTextColor">@color/red_200</color>
-    <color name="bottomSheetDividerColor">#875644</color>
+<!--    <color name="positiveButtonTextColor"></color>-->
+<!--    <color name="negativeButtonTextColor">@color/red_200</color>-->
+<!--    <color name="bottomSheetDividerColor">#875644</color>-->
 
     <!-- Light Theme -->
     <color name="colorPrimaryLight">@color/white</color>
     <color name="colorPrimaryVariantLight">@color/grey_100</color>
-    <color name="colorOnPrimaryLight">@color/grey_600</color>
+    <color name="colorOnPrimaryLight">@color/grey_700</color>
     <color name="colorSecondaryLight">@color/pink_400</color>
     <color name="colorSecondaryVariantLight">@color/pink_100</color>
     <color name="colorOnSecondaryLight">@color/grey_50</color>

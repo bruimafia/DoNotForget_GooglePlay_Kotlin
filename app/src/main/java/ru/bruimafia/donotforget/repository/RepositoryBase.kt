@@ -1,33 +1,30 @@
 package ru.bruimafia.donotforget.repository
 
-import io.reactivex.Flowable
-import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 import ru.bruimafia.donotforget.repository.local.Note
 
 interface RepositoryBase {
-    operator fun get(id: Long): Single<Note>
+    suspend fun get(id: Long): Note
 
-    fun getAll(): Flowable<List<Note>>
+    fun getAll(): Flow<List<Note>>
 
-    fun getAllOrderById(): Flowable<List<Note>>
+    fun getAllOrderById(): Flow<List<Note>>
 
-    fun getAllOrderByRelevance(): Flowable<List<Note>>
+    fun getAllOrderByRelevance(): Flow<List<Note>>
 
-    fun getHistory(): Flowable<List<Note>>
+    fun getHistory(): Flow<List<Note>>
 
-    fun create(note: Note)
+    suspend fun create(note: Note): Long
 
-    fun update(note: Note)
+    suspend fun update(note: Note)
 
-    fun delete(id: Long)
+    suspend fun recover(id: Long)
 
-    fun recover(id: Long)
+    suspend fun delete(id: Long)
 
-    fun clear()
+    suspend fun deleteAll()
 
-    fun clearHistory()
+    suspend fun clearHistory()
 
     fun syncing()
-
-    fun onDestroy()
 }

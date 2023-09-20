@@ -21,7 +21,6 @@ import com.swnishan.materialdatetimepicker.datepicker.MaterialDatePickerDialog
 import com.swnishan.materialdatetimepicker.datepicker.MaterialDatePickerView
 import com.swnishan.materialdatetimepicker.timepicker.MaterialTimePickerDialog
 import com.swnishan.materialdatetimepicker.timepicker.MaterialTimePickerView
-import io.reactivex.disposables.CompositeDisposable
 import ru.bruimafia.donotforget.App
 import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.databinding.FragmentEditBinding
@@ -58,9 +57,11 @@ class EditFragment : Fragment(), OnClickMethod {
 
         binding.view = this
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         viewModel.setNote(id)
         viewModel.isFullVersion.set(SharedPreferencesManager.isFullVersion)
+        Log.d(Constants.TAG, "note color = ${viewModel.note.get()?.color}")
     }
 
     override fun onCreateNote(note: Note) {
@@ -87,7 +88,6 @@ class EditFragment : Fragment(), OnClickMethod {
         MaterialColorPickerDialog.Builder(requireContext())
             .setTitle(getString(R.string.color_choose))
             .setColorShape(ColorShape.SQAURE)
-            .setColorSwatch(ColorSwatch._100)
             .setColorRes(resources.getIntArray(R.array.colorPresets))
             .setTickColorPerCard(true)
             .setColorListener { color, _ -> viewModel.note.get()!!.color = color }

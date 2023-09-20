@@ -47,7 +47,7 @@
     <string name="tv_no_sync">no yet</string>
     <string name="tv_privacy_policy">Privacy Policy</string>
 
-    <string name="btn_color_choose">Choose the background color</string>
+    <string name="btn_color_choose">Choose the background color or text color</string>
     <string name="btn_sign_in">Sign in with Google</string>
     <string name="btn_sync">Synchronize</string>
     <string name="btn_sync_complete">Good</string>

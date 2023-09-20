@@ -31,7 +31,7 @@
             <Button
                 android:id="@+id/btn_clear"
                 style="@style/ToolbarButton"
-                android:onClick="@{() -> viewModel.clear()}"
+                android:onClick="@{() -> viewModel.clearHistory()}"
                 android:text="@string/clear" />
 
         </androidx.appcompat.widget.Toolbar>

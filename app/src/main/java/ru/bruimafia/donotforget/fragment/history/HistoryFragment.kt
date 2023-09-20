@@ -16,10 +16,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscription
 import ru.bruimafia.donotforget.App
 import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.databinding.FragmentHistoryBinding
@@ -33,7 +29,6 @@ import java.util.concurrent.TimeUnit
 
 class HistoryFragment : Fragment() {
 
-    private val disposable = CompositeDisposable()
     private val viewModel: HistoryViewModel by viewModels {
         HistoryViewModelFactory((App.instance).repository)
     }
@@ -50,6 +45,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         viewModel.isFullVersion.set(SharedPreferencesManager.isFullVersion)
 
         navController = findNavController(view)
@@ -72,16 +68,12 @@ class HistoryFragment : Fragment() {
         binding.recycler.itemAnimator = DefaultItemAnimator()
         binding.recycler.adapter = adapter
 
-        disposable.add(viewModel.getNotesInHistory()
-            .subscribeOn(Schedulers.io())
-            .delay(100, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { viewModel.isLoading.set(true) }
-            .subscribe { notes: List<Note> ->
-                adapter.setData(notes.toMutableList())
-                viewModel.notes.set(notes)
-                viewModel.isLoading.set(false)
-            })
+        viewModel.getNotesInHistory().observe(viewLifecycleOwner) {
+            viewModel.isLoading.set(true)
+            adapter.setData(it.toMutableList())
+            viewModel.notes.set(it)
+            viewModel.isLoading.set(false)
+        }
     }
 
     private fun showRecoverDialog(id: Long) {

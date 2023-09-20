@@ -82,8 +82,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_note"
-                    app:boxStrokeColor="@{viewModel.note.color != 0 ? viewModel.note.color : viewModel.colorBackground}"
-                    app:hintTextColor="@{viewModel.note.color != 0 ? viewModel.note.color : viewModel.colorBackground}"
+                    app:textInputLayoutBoxStrokeColor="@{viewModel.note.color}"
+                    app:textInputLayoutHintTextColor="@{viewModel.note.color}"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -112,7 +112,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:onClick="@{v -> view.onChooseDate()}"
                     android:padding="@dimen/_15sdp"
-                    android:text="@string/date"
+                    tools:text="@string/date"
                     app:icon="@drawable/ic_calendar"
                     app:iconTint="?attr/colorOnBackground"
                     app:layout_constraintEnd_toStartOf="@id/btn_time"
@@ -130,7 +130,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:onClick="@{v -> view.onChooseTime()}"
                     android:padding="@dimen/_15sdp"
-                    android:text="@string/time"
+                    tools:text="@string/time"
                     app:icon="@drawable/ic_clock"
                     app:iconTint="?attr/colorOnBackground"
                     app:layout_constraintBaseline_toBaselineOf="@id/btn_date"
@@ -146,12 +146,12 @@
                     android:textColor="?attr/colorOnBackground"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:backgroundTint="@{viewModel.note.color != 0 ? viewModel.note.color : viewModel.colorBackground}"
+                    app:btnChooseColorBackgroundTint="@{viewModel.note.color}"
                     android:onClick="@{v -> view.onChooseColor()}"
                     android:padding="@dimen/_15sdp"
                     android:text="@string/btn_color_choose"
                     app:layout_constraintTop_toBottomOf="@id/btn_date"
-                    app:textColor="@{viewModel.note.color}" />
+                    app:textColorOnNote="@{viewModel.note.color}" />
 
                 <LinearLayout
                     android:id="@+id/ll_fix"
