@@ -1,30 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DoNotForget" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariantDark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryDark</item>
+        <item name="colorPrimary">#171415</item>
+        <item name="colorPrimaryVariant">#171415</item>
+        <item name="colorOnPrimary">@color/lightText_highEmphasis</item>
 
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorSecondaryDark</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantDark</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryDark</item>
+        <item name="colorSecondary">#171415</item>
+        <item name="colorSecondaryVariant">@color/base_variant</item>
+        <item name="colorOnSecondary">@color/lightText_highEmphasis</item>
+
+        <item name="colorSurface">#121212</item>
+        <item name="colorOnSurface">@color/lightText_highEmphasis</item>
+
+        <item name="colorError">@color/error_dark</item>
+        <item name="colorOnError">@color/darkText_highEmphasis</item>
 
         <item name="backgroundColor">#121212</item>
-        <item name="colorOnBackground">@color/grey_50</item>
+        <item name="colorOnBackground">@color/lightText_highEmphasis</item>
 
-        <item name="colorSurface">@color/black</item>
-        <item name="colorOnSurface">@color/white</item>
-
-        <item name="colorError">#CF6679</item>
-        <item name="colorOnError">#000000</item>
-
-        <item name="text_on_white">#444444</item>
+        <item name="colorTransparencyOut">@color/colorWhiteout</item>
+        <item name="textHighEmphasis">@color/lightText_highEmphasis</item>
+        <item name="textMediumEmphasis">@color/lightText_mediumEmphasis</item>
+        <item name="textDisableEmphasis">@color/lightText_disableEmphasis</item>
 
         <!-- Customize your theme here. -->
         <item name="android:textColor">?attr/colorOnBackground</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">?attr/colorSecondary</item>
         <item name="android:colorBackground">?attr/backgroundColor</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">?attr/backgroundColor</item>
@@ -32,28 +33,90 @@
         <item name="android:navigationBarDividerColor" tools:targetApi="27">?attr/backgroundColor</item>
         <item name="android:panelFullBackground">?attr/backgroundColor</item>
         <item name="android:itemBackground">?attr/backgroundColor</item>
-        <item name="android:itemTextAppearance">@style/menuItem</item>
         <item name="actionOverflowMenuStyle">@style/CMOptionsMenu</item>
+        <item name="android:itemTextAppearance">@style/MenuItem</item>
+        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+        <item name="dialogTheme">@style/DialogStyle</item>
+        <item name="android:dialogTheme">@style/DialogStyle</item>
     </style>
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark">
         <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="menuItem" parent="Widget.AppCompat.TextView.SpinnerItem">
-        <item name="android:textColor">?attr/colorOnBackground</item>
-    </style>
-
     <style name="CMOptionsMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:popupBackground">?attr/backgroundColor</item>
     </style>
 
-    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
+    <style name="MenuItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
 
-    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    <style name="ToolbarButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/_3sdp</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:backgroundTint">?attr/colorSecondary</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+    </style>
+
+    <!-- Set style for Color Picker dialog -->
+    <style name="DialogStyle" parent="@style/ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:background">?attr/colorSecondary</item>
+        <item name="android:backgroundTint">?attr/colorSecondary</item>
+    </style>
+
+    <!-- Set style for Color Picker dialog -->
+    <style name="AlertDialogStyle" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:background">?attr/colorSecondary</item>
+        <item name="android:dialogCornerRadius" tools:targetApi="28">8dp</item>
+        <item name="colorOnSurface">?attr/colorOnBackground</item>
+        <item name="buttonBarNegativeButtonStyle">@style/ButtonBarStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ButtonBarStyle</item>
+    </style>
+
+    <!-- Set style for Date Picker dialog -->
+    <style name="ThemeOverlay.Dialog.DatePicker" parent="@style/ThemeOverlay.Dialog.MaterialDatePicker">
+        <item name="materialDatePickerViewStyle">@style/DatePickerStyle</item>
+        <item name="colorOnSurface">?attr/colorOnBackground</item>
+        <item name="android:background">?attr/colorSecondary</item>
+        <item name="buttonBarNegativeButtonStyle">@style/ButtonBarStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ButtonBarStyle</item>
+    </style>
+
+    <style name="DatePickerStyle" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:textAppearance">@style/TextAppearance.DateTimePicker</item>
+        <item name="android:background">?attr/colorSecondary</item>
+        <item name="highlighterColor">?attr/colorTransparencyOut</item>
+        <item name="isShowHighlighter">true</item>
+    </style>
+
+    <!-- Set style for Time Picker dialog -->
+    <style name="ThemeOverlay.Dialog.TimePicker" parent="@style/ThemeOverlay.Dialog.MaterialTimePicker">
+        <item name="materialTimePickerViewStyle">@style/TimePickerStyle</item>
+        <item name="colorOnSurface">?attr/colorOnBackground</item>
+        <item name="android:background">?attr/colorSecondary</item>
+        <item name="buttonBarNegativeButtonStyle">@style/ButtonBarStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ButtonBarStyle</item>
+    </style>
+
+    <style name="TimePickerStyle" parent="Widget.MaterialTimePicker">
+        <item name="android:textAppearance">@style/TextAppearance.DateTimePicker</item>
+        <item name="android:background">?attr/colorSecondary</item>
+        <item name="highlighterColor">?attr/colorTransparencyOut</item>
+        <item name="isShowHighlighter">true</item>
+    </style>
+
+    <style name="TextAppearance.DateTimePicker" parent="@style/Base.TextAppearance.MaterialDateTimePicker">
+        <item name="android:textColor">@color/base_variant</item>
+        <item name="android:background">@color/base_variant</item>
+    </style>
+
+    <style name="ButtonBarStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:backgroundTint">?attr/colorSecondary</item>
     </style>
 
 </resources>

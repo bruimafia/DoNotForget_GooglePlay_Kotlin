@@ -9,7 +9,6 @@ import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import kotlinx.coroutines.CoroutineScope
@@ -27,29 +26,25 @@ class Receiver : BroadcastReceiver() {
 
     override fun onReceive(cnx: Context?, intent: Intent?) = goAsync {
         context = cnx
-        Log.d(Constants.TAG, "BroadcastReceiver: запущен")
+        Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): запущен")
 
         if (intent != null) {
-            if (intent.action != null) {
+            when (intent.action) {
+                Intent.ACTION_BOOT_COMPLETED -> {
+                    Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): ACTION_BOOT_COMPLETED телефон включился")
+                    startNotificationsWorker()
+                    startRepeating()
+                }
 
-                when (intent.action) {
-                    Intent.ACTION_BOOT_COMPLETED -> {
-                        Log.d(Constants.TAG, "BroadcastReceiver: ACTION_BOOT_COMPLETED телефон включился")
-                        startNotificationsWorker()
-                        startRepeating()
-                    }
+                Constants.ACTION_CHECK -> {
+                    Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): ACTION_CHECK")
+                    startNotificationsWorker()
+                }
 
-                    Constants.ACTION_CHECK -> {
-                        Log.d(Constants.TAG, "BroadcastReceiver: ACTION_CHECK")
-                        startNotificationsWorker()
-                    }
-
-                    Constants.ACTION_CREATE_OR_UPDATE -> {
-                        Log.d(Constants.TAG, "BroadcastReceiver: ACTION_CREATE_OR_UPDATE")
-                        val id: Long = intent.getLongExtra("test_id", -1)
-
-                        Notification().createNotification(App.instance.repository.get(id))
-                    }
+                Constants.ACTION_CREATE_OR_UPDATE -> {
+                    Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): ACTION_CREATE_OR_UPDATE")
+                    val id: Long = intent.getLongExtra(Constants.NOTE_ID, -1)
+                    Notification().createNotification(App.instance.repository.get(id))
                 }
             }
         }
@@ -60,7 +55,7 @@ class Receiver : BroadcastReceiver() {
         block: suspend CoroutineScope.() -> Unit
     ) {
         val pendingResult = goAsync()
-        @OptIn(DelicateCoroutinesApi::class) // Must run globally; there's no teardown callback.
+        @OptIn(DelicateCoroutinesApi::class)
         GlobalScope.launch(context) {
             try {
                 block()
@@ -72,16 +67,11 @@ class Receiver : BroadcastReceiver() {
 
     private fun startNotificationsWorker() {
         val data = Data.Builder()
-            .putString("action", Constants.ACTION_START)
+            .putString("action", Constants.ACTION_CHECK)
             .build()
 
-//        val workRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-//            .addTag(Constants.WORKER_CHECK_TAG)
-//            .setInputData(data)
-//            .build()
-
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .addTag(Constants.WORKER_CHECK_TAG)
+            .addTag(Constants.WORKER_CHECK)
             .setInputData(data)
             .build()
 
@@ -91,18 +81,17 @@ class Receiver : BroadcastReceiver() {
     private fun startRepeating() {
         val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CHECK)
 
-        val penIntent: PendingIntent? =
+        val penIntent: PendingIntent =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
                 PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             else
                 PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        if (penIntent != null) {
-            val manager = App.instance.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
-            manager.cancel(penIntent)
-            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), Constants.REPEAT_INTERVAL.toLong(), penIntent)
-        }
-        Log.d(Constants.TAG, "SingleActivity: запущен startRepeating")
+        val manager = App.instance.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
+        manager.cancel(penIntent)
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, penIntent)
+        Log.d(Constants.TAG, "From BroadcastReceiver: запущен startRepeating()")
+        Log.d(Constants.TAG, "From BroadcastReceiver: ${penIntent.creatorUid}")
     }
 
 }

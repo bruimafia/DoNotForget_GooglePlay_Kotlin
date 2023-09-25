@@ -64,12 +64,12 @@
                 android:layout_height="@dimen/_80sdp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_clean"
-                app:tint="?attr/colorOnBackground"/>
+                app:tint="?attr/textDisableEmphasis"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="?attr/textDisableEmphasis"
                 android:layout_margin="@dimen/_10sdp"
                 android:text="@string/no_history"
                 android:textSize="@dimen/_15sdp" />
@@ -82,6 +82,7 @@
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:indeterminateTint="@color/base_variant"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="Theme">
-        <attr name="text_on_white" format="color|reference" />
+        <attr name="colorTransparencyOut" format="color|reference" />
+        <attr name="textHighEmphasis" format="color|reference" />
+        <attr name="textMediumEmphasis" format="color|reference" />
+        <attr name="textDisableEmphasis" format="color|reference" />
     </declare-styleable>
-
 </resources>

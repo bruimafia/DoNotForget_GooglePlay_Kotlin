@@ -44,7 +44,7 @@ class HistoryViewModel(private val repository: Repository) : ViewModel() {
             .putLong(Constants.NOTE_ID, id)
             .build()
         val workRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-            .addTag(Constants.WORKER_CHECK_TAG)
+            .addTag(Constants.WORKER_CHECK)
             .setInputData(data)
             //.setInitialDelay(5, TimeUnit.MINUTES)
             .build()

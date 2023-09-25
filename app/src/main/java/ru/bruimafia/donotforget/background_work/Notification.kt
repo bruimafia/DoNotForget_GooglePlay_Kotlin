@@ -4,16 +4,17 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentResolver
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.RemoteViews
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -24,6 +25,7 @@ import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.SingleActivity
 import ru.bruimafia.donotforget.repository.local.Note
 import ru.bruimafia.donotforget.util.Constants
+
 
 class Notification {
 
@@ -36,12 +38,13 @@ class Notification {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(PRIMARY_CHANNEL_ID, App.instance.getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH)
-            val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            //val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + App.instance.packageName + "/raw/notification")
             val att = AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                 .build()
-            channel.setSound(defaultSoundUri, att)
+            channel.setSound(soundUri, att)
             channel.enableVibration(true)
             channel.enableLights(true)
             channel.lightColor = Color.RED
@@ -56,7 +59,7 @@ class Notification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             view = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.notification)
             view.setTextViewText(R.id.tv_noteTitle, note.title)
-            view.setTextColor(R.id.tv_noteTitle, ContextCompat.getColor(App.instance, R.color.grey_700))
+            //view.setTextColor(R.id.tv_noteTitle, currentThemeMode())
         } else {
             view = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.notification_before_api31)
             view.setInt(R.id.rl_view, "setBackgroundColor", note.color)
@@ -95,8 +98,8 @@ class Notification {
     }
 
     private fun textColorOnNote(color: Int): Int {
-        return if (isDarkBackground(color) && color != 0) ContextCompat.getColor(App.instance, R.color.grey_50)
-        else ContextCompat.getColor(App.instance, R.color.grey_700)
+        return if (isDarkBackground(color) && color != 0) ContextCompat.getColor(App.instance, R.color.lightText_highEmphasis)
+        else ContextCompat.getColor(App.instance, R.color.darkText_highEmphasis)
     }
 
     private fun isDarkBackground(color: Int): Boolean {

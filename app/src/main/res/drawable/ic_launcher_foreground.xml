@@ -16,9 +16,9 @@
         android:strokeLineCap="round"/>
     <path
         android:pathData="M35,36.5L20.5,51C16.9,42 21,32.9 21,32.9L7.5,17c0,0 -4.4,0.7 -7.5,-1.8L15.3,0c0,0 2.5,3.1 1.8,7.6L32.8,21c0,0 8.5,-4.4 18.1,-0.5L35,36.5z"
-        android:fillColor="#ec407a"/>
+        android:fillColor="#FB6F92"/>
     <path
         android:pathData="M21,32.9c0,0 0,0.1 -0.1,0.2L33,20.9C32.9,21 32.8,21 32.8,21L17.1,7.7l-9.5,9.5L21,32.9z"
-        android:fillColor="#ec407a"/>
+        android:fillColor="#FB6F92"/>
   </group>
 </vector>

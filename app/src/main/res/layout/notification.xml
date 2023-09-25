@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:textColor="@color/black"
+        tools:textColor="?attr/colorOnPrimary"
         tools:text="Сходить завтра в магазин и купить там торт, мороженое, шпроты, хлеб, молоко, пироги, суп и салат" />
 
 </RelativeLayout>

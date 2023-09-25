@@ -43,32 +43,39 @@ class BindingAdapters {
 
     @BindingAdapter("app:noteBackgroundColor")
     fun noteBackgroundColor(view: MaterialCardView, color: Int) {
+        val typedValue = TypedValue()
+        view.context.theme.resolveAttribute(R.attr.colorTransparencyOut, typedValue, true)
+
         view.setCardBackgroundColor(
             if (color != 0) color
-            else ContextCompat.getColor(view.context, R.color.white)
+            else typedValue.data
         )
     }
 
     @BindingAdapter("app:imageIconTint")
     fun imageIconTint(view: ImageView, color: Int) {
         view.imageTintList =
-            if (isDarkBackground(color) && color != 0) ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.grey_50))
-            else ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.grey_600))
+            if (isDarkBackground(color) && color != 0) ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.lightText_mediumEmphasis))
+            else ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.darkText_mediumEmphasis))
     }
 
     @BindingAdapter("app:textColorDateTime")
     fun textColorDateTime(view: TextView, color: Int) {
         view.setTextColor(
-            if (isDarkBackground(color) && color != 0) ContextCompat.getColor(view.context, R.color.grey_50)
-            else ContextCompat.getColor(view.context, R.color.grey_600)
+            if (isDarkBackground(color) && color != 0) ContextCompat.getColor(view.context, R.color.lightText_mediumEmphasis)
+            else ContextCompat.getColor(view.context, R.color.darkText_mediumEmphasis)
         )
     }
 
     @BindingAdapter("app:textColorOnNote")
     fun textColorOnNote(view: TextView, color: Int) {
+        val typedValue = TypedValue()
+        view.context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnBackground, typedValue, true)
+
         view.setTextColor(
-            if (isDarkBackground(color) && color != 0) ContextCompat.getColor(view.context, R.color.grey_50)
-            else ContextCompat.getColor(view.context, R.color.grey_700)
+            if (color == 0) typedValue.data
+            else if (isDarkBackground(color)) ContextCompat.getColor(view.context, R.color.lightText_highEmphasis)
+            else ContextCompat.getColor(view.context, R.color.darkText_highEmphasis)
         )
     }
 

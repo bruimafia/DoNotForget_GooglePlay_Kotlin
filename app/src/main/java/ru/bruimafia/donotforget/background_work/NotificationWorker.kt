@@ -1,15 +1,16 @@
 package ru.bruimafia.donotforget.background_work
 
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import ru.bruimafia.donotforget.App
-import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.repository.local.Note
 import ru.bruimafia.donotforget.util.Constants
 import java.text.SimpleDateFormat
@@ -26,9 +27,9 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
         Log.d(Constants.TAG, "From NotificationWorker doWork(): action -> $action; noteID -> $noteID")
 
         when (action) {
-            Constants.ACTION_START -> {
-                Log.d(Constants.TAG, "From NotificationWorker doWork(): ACTION_START")
-                App.instance.repository.getAllOrderById().collect { value -> checkNotes(value) }
+            Constants.ACTION_CHECK -> {
+                Log.d(Constants.TAG, "From NotificationWorker doWork(): ACTION_CHECK")
+                App.instance.repository.getAllOrderById().collect { list -> checkNotes(list, action) }
             }
 
             Constants.ACTION_CREATE_OR_UPDATE -> {
@@ -45,23 +46,35 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
         return Result.success()
     }
 
-    private fun transformationTimeCheckNotifications(time: Long): String? {
-        return if (time == 0L) App.instance.resources.getString(R.string.tv_no_sync)
-        else SimpleDateFormat("EEEE, dd MMMM y HH:mm", Locale.getDefault()).format(Date(time))
-    }
+    private fun checkNotes(notes: List<Note>, action: String) {
+        Log.d(Constants.TAG, "From NotificationWorker checkNotes(): START")
 
-    private fun checkNotes(notes: List<Note>) {
-        Log.d(Constants.TAG, "checkNotes START")
         for (note in notes) {
-            Log.d(Constants.TAG, "note id: ${note.id}")
-            if (note.isFix || note.date >= System.currentTimeMillis())
-                createNotification(note)
+            Log.d(Constants.TAG, "From NotificationWorker checkNotes(): note.id -> ${note.id}")
+            if (note.isFix || note.date >= System.currentTimeMillis()) {
+                if (!existsNotification(note.id))
+                    createNotification(note)
+            }
         }
     }
 
+    private fun existsNotification(id: Long): Boolean {
+        val notificationManager = App.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notifications: Array<StatusBarNotification> = notificationManager.activeNotifications
+        for (notification in notifications) {
+            if (notification.id == id.toInt())
+                return true
+        }
+        return false
+    }
+
     private fun createNotification(note: Note) {
+        Log.d(Constants.TAG, "dateInMidnight: ${SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", Locale.getDefault()).format(Date(dateInMidnight()))}")
+        Log.d(Constants.TAG, "note.date: ${SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", Locale.getDefault()).format(Date(note.date))}")
+
         deleteNotification(note)
         if (note.isFix && note.date == 0L) Notification().createNotification(note)
+        if (note.date <= System.currentTimeMillis() && note.date != 0L) Notification().createNotification(note)
         if (note.date >= dateInMidnight()) createPendingNotification(note)
     }
 
@@ -71,23 +84,21 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
     }
 
     private fun createPendingNotification(note: Note) {
-        val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CREATE_OR_UPDATE).putExtra("test_id", note.id)
+        val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CREATE_OR_UPDATE).putExtra(Constants.NOTE_ID, note.id)
 
-        val penIntent: PendingIntent? =
+        val penIntent: PendingIntent =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
                 PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             else
                 PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        if (penIntent != null) {
-            val manager = App.instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            manager.cancel(penIntent)
-            manager[AlarmManager.RTC_WAKEUP, note.date] = penIntent
-        }
+        val manager = App.instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        manager.cancel(penIntent)
+        manager[AlarmManager.RTC_WAKEUP, note.date] = penIntent
     }
 
     private fun deletePendingNotification(note: Note) {
-        val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CREATE_OR_UPDATE).putExtra("test_id", note.id)
+        val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CREATE_OR_UPDATE).putExtra(Constants.NOTE_ID, note.id)
 
         val penIntent: PendingIntent =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)

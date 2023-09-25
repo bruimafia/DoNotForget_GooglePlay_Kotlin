@@ -1,12 +1,10 @@
 package ru.bruimafia.donotforget.fragment.edit
 
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import kotlinx.coroutines.launch
@@ -31,18 +29,12 @@ class EditViewModel(private val repository: Repository) : ViewModel() {
 
     fun create(note: Note) = viewModelScope.launch {
         val id = repository.create(note)
-        Log.d(Constants.TAG, "id ---> $id")
         startNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, id)
-//        if (note.isFix)
-//            Notification().createNotification(note)
     }
 
     fun update(note: Note) = viewModelScope.launch {
         repository.update(note)
         startNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, note.id)
-//        Notification().deleteNotification(note.id)
-//        if (note.isFix)
-//            Notification().createNotification(note)
     }
 
     fun delete(id: Long) = viewModelScope.launch {
@@ -87,7 +79,7 @@ class EditViewModel(private val repository: Repository) : ViewModel() {
             .build()
 
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .addTag(Constants.WORKER_CHECK_TAG)
+            .addTag(Constants.WORKER_CHECK)
             .setInputData(data)
             .build()
 

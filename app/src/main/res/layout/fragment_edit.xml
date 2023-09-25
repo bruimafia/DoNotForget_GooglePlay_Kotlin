@@ -90,7 +90,7 @@
                         android:id="@+id/et_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
+                        android:inputType="textMultiLine|textCapSentences"
                         android:paddingStart="@dimen/_23sdp"
                         android:paddingTop="@dimen/_30sdp"
                         android:paddingEnd="@dimen/_23sdp"
@@ -176,7 +176,7 @@
                         android:id="@+id/vFix"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_3sdp"
-                        android:background="?attr/colorSecondaryVariant"
+                        android:background="@color/base_variant"
                         android:visibility="@{viewModel.note.fix ? View.VISIBLE : View.GONE}" />
 
                 </LinearLayout>

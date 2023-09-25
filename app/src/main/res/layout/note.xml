@@ -20,16 +20,16 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         app:noteBackgroundColor="@{note.color}"
-        app:strokeColor="@color/colorBlackout"
+        app:strokeColor="?attr/colorTransparencyOut"
         app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_6sdp"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp">
+            android:paddingTop="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_7sdp"
+            android:paddingStart="@dimen/_9sdp"
+            android:paddingEnd="@dimen/_9sdp">
 
             <LinearLayout
                 android:id="@+id/ll_attr"
