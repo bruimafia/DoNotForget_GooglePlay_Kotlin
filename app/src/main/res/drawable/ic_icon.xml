@@ -4,11 +4,10 @@
     android:height="51dp"
     android:viewportWidth="51"
     android:viewportHeight="51">
-
     <path
         android:pathData="M 35.7 35.7 L 50 50"
         android:strokeWidth="4"
-        android:strokeColor="#9e9e9e"
+        android:strokeColor="#9E9E9E"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10" />

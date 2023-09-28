@@ -15,12 +15,13 @@ import ru.bruimafia.donotforget.repository.local.Note
 import ru.bruimafia.donotforget.util.Constants
 import java.util.Calendar
 
+
 class EditViewModel(private val repository: Repository) : ViewModel() {
 
     var note: ObservableField<Note> = ObservableField<Note>()
     var isFullVersion = ObservableField(false)
 
-    fun setNote(id: Long)= viewModelScope.launch {
+    fun setNote(id: Long) = viewModelScope.launch {
         if (note.get() == null && id != -1L)
             note.set(repository.get(id))
         if (note.get() == null && id == -1L)
@@ -29,10 +30,12 @@ class EditViewModel(private val repository: Repository) : ViewModel() {
 
     fun create(note: Note) = viewModelScope.launch {
         val id = repository.create(note)
+        //FirebaseManager.createOrUpdate(repository.get(id))
         startNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, id)
     }
 
     fun update(note: Note) = viewModelScope.launch {
+        note.dateUpdate = System.currentTimeMillis()
         repository.update(note)
         startNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, note.id)
     }

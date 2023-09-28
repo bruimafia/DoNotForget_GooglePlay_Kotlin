@@ -34,19 +34,17 @@ class HistoryViewModel(private val repository: Repository) : ViewModel() {
 
     fun recover(id: Long) = viewModelScope.launch {
         repository.recover(id)
-
-        startCheckNotificationsWorker(Constants.ACTION_CREATE_OR_UPDATE, id)
+        startCheckNotificationsWorker(id)
     }
 
-    private fun startCheckNotificationsWorker(action: String, id: Long) {
+    private fun startCheckNotificationsWorker(id: Long) {
         val data = Data.Builder()
-            .putString("action", action)
+            .putString("action", Constants.ACTION_CREATE_OR_UPDATE)
             .putLong(Constants.NOTE_ID, id)
             .build()
         val workRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
             .addTag(Constants.WORKER_CHECK)
             .setInputData(data)
-            //.setInitialDelay(5, TimeUnit.MINUTES)
             .build()
         WorkManager.getInstance(App.instance).enqueue(workRequest)
     }

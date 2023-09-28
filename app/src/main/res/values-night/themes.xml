@@ -36,7 +36,6 @@
         <item name="actionOverflowMenuStyle">@style/CMOptionsMenu</item>
         <item name="android:itemTextAppearance">@style/MenuItem</item>
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
-        <item name="dialogTheme">@style/DialogStyle</item>
         <item name="android:dialogTheme">@style/DialogStyle</item>
     </style>
 
@@ -61,13 +60,13 @@
         <item name="android:textColor">?attr/colorOnSecondary</item>
     </style>
 
-    <!-- Set style for Color Picker dialog -->
+    <!-- Style for fragment dialog -->
     <style name="DialogStyle" parent="@style/ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:background">?attr/colorSecondary</item>
         <item name="android:backgroundTint">?attr/colorSecondary</item>
     </style>
 
-    <!-- Set style for Color Picker dialog -->
+    <!-- Style for Color Picker dialog -->
     <style name="AlertDialogStyle" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="android:background">?attr/colorSecondary</item>
         <item name="android:dialogCornerRadius" tools:targetApi="28">8dp</item>
@@ -76,7 +75,7 @@
         <item name="buttonBarPositiveButtonStyle">@style/ButtonBarStyle</item>
     </style>
 
-    <!-- Set style for Date Picker dialog -->
+    <!-- Style for Date Picker dialog -->
     <style name="ThemeOverlay.Dialog.DatePicker" parent="@style/ThemeOverlay.Dialog.MaterialDatePicker">
         <item name="materialDatePickerViewStyle">@style/DatePickerStyle</item>
         <item name="colorOnSurface">?attr/colorOnBackground</item>
@@ -92,7 +91,7 @@
         <item name="isShowHighlighter">true</item>
     </style>
 
-    <!-- Set style for Time Picker dialog -->
+    <!-- Style for Time Picker dialog -->
     <style name="ThemeOverlay.Dialog.TimePicker" parent="@style/ThemeOverlay.Dialog.MaterialTimePicker">
         <item name="materialTimePickerViewStyle">@style/TimePickerStyle</item>
         <item name="colorOnSurface">?attr/colorOnBackground</item>

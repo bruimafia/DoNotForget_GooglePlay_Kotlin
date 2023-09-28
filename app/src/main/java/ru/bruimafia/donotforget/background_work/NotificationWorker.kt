@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.work.CoroutineWorker
@@ -24,21 +23,21 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
     override suspend fun doWork(): Result {
         val action = inputData.getString("action")
         val noteID = inputData.getLong(Constants.NOTE_ID, -1)
-        Log.d(Constants.TAG, "From NotificationWorker doWork(): action -> $action; noteID -> $noteID")
+        Log.d(Constants.TAG, "From NotificationWorker::class doWork() -> action = $action, noteID = $noteID")
 
         when (action) {
             Constants.ACTION_CHECK -> {
-                Log.d(Constants.TAG, "From NotificationWorker doWork(): ACTION_CHECK")
-                App.instance.repository.getAllOrderById().collect { list -> checkNotes(list, action) }
+                Log.d(Constants.TAG, "From NotificationWorker::class doWork() -> ACTION_CHECK")
+                App.instance.repository.getAllActualOrderById().collect { list -> checkNotes(list) }
             }
 
             Constants.ACTION_CREATE_OR_UPDATE -> {
-                Log.d(Constants.TAG, "From NotificationWorker doWork(): ACTION_CREATE_OR_UPDATE")
+                Log.d(Constants.TAG, "From NotificationWorker::class doWork() -> ACTION_CREATE_OR_UPDATE")
                 createNotification(App.instance.repository.get(noteID))
             }
 
             Constants.ACTION_DELETE -> {
-                Log.d(Constants.TAG, "From NotificationWorker doWork(): ACTION_DELETE")
+                Log.d(Constants.TAG, "From NotificationWorker::class doWork() -> ACTION_DELETE")
                 deleteNotification(App.instance.repository.get(noteID))
             }
         }
@@ -46,11 +45,9 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
         return Result.success()
     }
 
-    private fun checkNotes(notes: List<Note>, action: String) {
-        Log.d(Constants.TAG, "From NotificationWorker checkNotes(): START")
-
+    private fun checkNotes(notes: List<Note>) {
         for (note in notes) {
-            Log.d(Constants.TAG, "From NotificationWorker checkNotes(): note.id -> ${note.id}")
+            Log.d(Constants.TAG, "From NotificationWorker:class checkNotes() -> note.id = ${note.id}")
             if (note.isFix || note.date >= System.currentTimeMillis()) {
                 if (!existsNotification(note.id))
                     createNotification(note)
@@ -69,8 +66,18 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
     }
 
     private fun createNotification(note: Note) {
-        Log.d(Constants.TAG, "dateInMidnight: ${SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", Locale.getDefault()).format(Date(dateInMidnight()))}")
-        Log.d(Constants.TAG, "note.date: ${SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", Locale.getDefault()).format(Date(note.date))}")
+        Log.d(
+            Constants.TAG,
+            "From NotificationWorker:class createNotification() -> dateInMidnight = ${
+                SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", Locale.getDefault()).format(Date(dateInMidnight()))
+            }"
+        )
+        Log.d(
+            Constants.TAG,
+            "From NotificationWorker:class createNotification() -> note.date = ${
+                SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", Locale.getDefault()).format(Date(note.date))
+            }"
+        )
 
         deleteNotification(note)
         if (note.isFix && note.date == 0L) Notification().createNotification(note)
@@ -85,12 +92,8 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
 
     private fun createPendingNotification(note: Note) {
         val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CREATE_OR_UPDATE).putExtra(Constants.NOTE_ID, note.id)
-
         val penIntent: PendingIntent =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            else
-                PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val manager = App.instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         manager.cancel(penIntent)
@@ -99,12 +102,8 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
 
     private fun deletePendingNotification(note: Note) {
         val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CREATE_OR_UPDATE).putExtra(Constants.NOTE_ID, note.id)
-
         val penIntent: PendingIntent =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            else
-                PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(App.instance, note.id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val manager = App.instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         manager.cancel(penIntent)

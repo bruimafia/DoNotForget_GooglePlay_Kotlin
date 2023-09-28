@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_1sdp">
 
     <TextView
         android:id="@+id/tv_noteTitle"
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        tools:textColor="?attr/colorOnPrimary"
-        tools:text="Сходить завтра в магазин и купить там торт, мороженое, шпроты, хлеб, молоко, пироги, суп и салат" />
+        tools:text="Сходить завтра в магазин и купить там торт, мороженое, шпроты, хлеб, молоко, пироги, суп и салат"
+        tools:textColor="?attr/colorOnPrimary" />
 
 </RelativeLayout>

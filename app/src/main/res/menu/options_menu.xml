@@ -23,10 +23,10 @@
         android:title="@string/change_theme"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/onBuy"
-        android:title="@string/buy"
-        app:showAsAction="never" />
+    <!--    <item-->
+    <!--        android:id="@+id/onBuy"-->
+    <!--        android:title="@string/buy"-->
+    <!--        app:showAsAction="never" />-->
 
     <item
         android:id="@+id/action_tasksFragment_to_aboutDialog"

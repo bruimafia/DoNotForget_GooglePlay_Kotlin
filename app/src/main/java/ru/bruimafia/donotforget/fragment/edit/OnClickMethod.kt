@@ -2,6 +2,7 @@ package ru.bruimafia.donotforget.fragment.edit
 
 import ru.bruimafia.donotforget.repository.local.Note
 
+
 interface OnClickMethod {
     fun onCreateNote(note: Note)
     fun onUpdateNote(note: Note)

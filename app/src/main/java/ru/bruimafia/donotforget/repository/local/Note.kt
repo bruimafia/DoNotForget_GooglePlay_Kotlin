@@ -7,7 +7,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.bruimafia.donotforget.BR
-import kotlin.properties.Delegates
+
 
 @Entity(tableName = "notes")
 @Keep
@@ -19,7 +19,8 @@ class Note(
     isFix: Boolean = true,
     inHistory: Boolean = false,
     dateCreate: Long = System.currentTimeMillis(),
-    dateDelete: Long = 0
+    dateDelete: Long = 0,
+    dateUpdate: Long = System.currentTimeMillis()
 ) : BaseObservable() {
 
     @PrimaryKey(autoGenerate = true)
@@ -87,22 +88,35 @@ class Note(
             notifyPropertyChanged(BR.dateDelete)
         }
 
+    @ColumnInfo(name = "date_update")
+    @get:Bindable
+    var dateUpdate: Long = dateUpdate
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.dateUpdate)
+        }
+
     override fun equals(other: Any?): Boolean {
         val note: Note = other as Note
         if (id != note.id) return false
-        return dateCreate >= note.dateCreate
+        return hashCode() == note.hashCode()
     }
 
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + title.hashCode()
         result = 31 * result + date.hashCode()
-        result = 31 * result + color.hashCode()
+        result = 31 * result + color
         result = 31 * result + isFix.hashCode()
         result = 31 * result + inHistory.hashCode()
         result = 31 * result + dateCreate.hashCode()
         result = 31 * result + dateDelete.hashCode()
+        result = 31 * result + dateUpdate.hashCode()
         return result
+    }
+
+    override fun toString(): String {
+        return "Note(hashcode=${hashCode()}, id=$id, title='$title', date=$date, color=$color, isFix=$isFix, inHistory=$inHistory, dateCreate=$dateCreate, dateDelete=$dateDelete, dateUpdate=$dateUpdate)"
     }
 
 }

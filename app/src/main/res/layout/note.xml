@@ -26,39 +26,40 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_7sdp"
-            android:paddingBottom="@dimen/_7sdp"
             android:paddingStart="@dimen/_9sdp"
-            android:paddingEnd="@dimen/_9sdp">
+            android:paddingTop="@dimen/_7sdp"
+            android:paddingEnd="@dimen/_9sdp"
+            android:paddingBottom="@dimen/_7sdp">
 
             <LinearLayout
                 android:id="@+id/ll_attr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/tv_title"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:id="@+id/ll_pin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/rounded_corner"
                     android:gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:visibility="@{note.isFix ? View.VISIBLE : View.GONE}"
                     android:orientation="horizontal"
                     android:padding="@dimen/_6sdp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{note.isFix ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toStartOf="@id/ll_date"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="@dimen/_14sdp"
                         android:layout_height="@dimen/_14sdp"
+                        android:contentDescription="@string/app_name"
                         android:padding="@dimen/_1sdp"
                         android:rotation="90"
                         android:src="@drawable/ic_icon" />
@@ -69,23 +70,24 @@
                     android:id="@+id/ll_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/rounded_corner"
                     android:gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_6sdp"
                     android:visibility="@{note.date != 0 ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintStart_toEndOf="@id/ll_pin"
                     app:layout_constraintEnd_toStartOf="@id/ll_time"
+                    app:layout_constraintStart_toEndOf="@id/ll_pin"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="@dimen/_14sdp"
                         android:layout_height="@dimen/_14sdp"
                         android:layout_marginEnd="@dimen/_3sdp"
+                        android:contentDescription="@string/date"
                         android:src="@drawable/ic_calendar"
-                        app:imageIconTint="@{note.color}"/>
+                        app:imageIconTint="@{note.color}" />
 
                     <TextView
                         android:id="@+id/tv_date"
@@ -104,10 +106,10 @@
                     android:id="@+id/ll_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/rounded_corner"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/_5sdp"
                     android:padding="@dimen/_6sdp"
                     android:visibility="@{note.date != 0 ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toEndOf="@id/ll_date"
@@ -117,6 +119,7 @@
                         android:layout_width="@dimen/_14sdp"
                         android:layout_height="@dimen/_14sdp"
                         android:layout_marginEnd="@dimen/_3sdp"
+                        android:contentDescription="@string/time"
                         android:src="@drawable/ic_clock"
                         app:imageIconTint="@{note.color}" />
 

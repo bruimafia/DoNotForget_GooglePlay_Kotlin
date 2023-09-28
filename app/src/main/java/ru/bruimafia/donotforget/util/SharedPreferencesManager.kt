@@ -3,6 +3,7 @@ package ru.bruimafia.donotforget.util
 import android.content.Context
 import android.content.SharedPreferences
 
+
 object SharedPreferencesManager {
 
     private const val NAME = "com.bruimafia.donotforget"
@@ -42,7 +43,7 @@ object SharedPreferencesManager {
             sPref.edit().putBoolean(IS_ORDER_BY_ID, value).apply()
         }
 
-    var getLastSync: Long
+    var lastSync: Long
         get() = sPref.getLong(LAST_SYNC, 0L)
         set(value) {
             sPref.edit().putLong(LAST_SYNC, value).apply()

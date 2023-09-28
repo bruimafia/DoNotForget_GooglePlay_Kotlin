@@ -20,29 +20,30 @@ import ru.bruimafia.donotforget.util.Constants
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
+
 class Receiver : BroadcastReceiver() {
 
     private var context: Context? = null
 
     override fun onReceive(cnx: Context?, intent: Intent?) = goAsync {
         context = cnx
-        Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): запущен")
+        Log.d(Constants.TAG, "From Receiver::class onReceive() -> запущен")
 
         if (intent != null) {
             when (intent.action) {
                 Intent.ACTION_BOOT_COMPLETED -> {
-                    Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): ACTION_BOOT_COMPLETED телефон включился")
+                    Log.d(Constants.TAG, "From Receiver::class onReceive() -> ACTION_BOOT_COMPLETED (телефон включился)")
                     startNotificationsWorker()
                     startRepeating()
                 }
 
                 Constants.ACTION_CHECK -> {
-                    Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): ACTION_CHECK")
+                    Log.d(Constants.TAG, "From Receiver::class onReceive() -> ACTION_CHECK")
                     startNotificationsWorker()
                 }
 
                 Constants.ACTION_CREATE_OR_UPDATE -> {
-                    Log.d(Constants.TAG, "From BroadcastReceiver onReceive(): ACTION_CREATE_OR_UPDATE")
+                    Log.d(Constants.TAG, "From Receiver::class onReceive() -> ACTION_CREATE_OR_UPDATE")
                     val id: Long = intent.getLongExtra(Constants.NOTE_ID, -1)
                     Notification().createNotification(App.instance.repository.get(id))
                 }
@@ -80,18 +81,13 @@ class Receiver : BroadcastReceiver() {
 
     private fun startRepeating() {
         val intent: Intent = Intent(App.instance, Receiver::class.java).setAction(Constants.ACTION_CHECK)
-
         val penIntent: PendingIntent =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            else
-                PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(App.instance, Constants.RC_ALARM, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val manager = App.instance.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
         manager.cancel(penIntent)
         manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, penIntent)
-        Log.d(Constants.TAG, "From BroadcastReceiver: запущен startRepeating()")
-        Log.d(Constants.TAG, "From BroadcastReceiver: ${penIntent.creatorUid}")
+        Log.d(Constants.TAG, "From Receiver::class -> запущен startRepeating()")
     }
 
 }

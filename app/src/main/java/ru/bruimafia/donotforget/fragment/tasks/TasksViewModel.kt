@@ -16,6 +16,7 @@ import ru.bruimafia.donotforget.repository.Repository
 import ru.bruimafia.donotforget.repository.local.Note
 import ru.bruimafia.donotforget.util.Constants
 
+
 class TasksViewModel(private val repository: Repository) : ViewModel() {
 
     var notesForScreen = ObservableField<List<Note>>()
@@ -25,31 +26,28 @@ class TasksViewModel(private val repository: Repository) : ViewModel() {
 
     fun getNotes() = liveData {
         if (isOrderById.get() == true)
-            repository.getAllOrderById().collect {
+            repository.getAllActualOrderById().collect {
                 emit(it)
             }
         else
-            repository.getAllOrderByRelevance().collect {
+            repository.getAllActualOrderByRelevance().collect {
                 emit(it)
             }
     }
 
     fun delete(id: Long) = viewModelScope.launch {
         repository.delete(id)
-
-        startCheckNotificationsWorker(Constants.ACTION_DELETE, id)
-        Notification().deleteNotification(id)
+        startCheckNotificationsWorker(id)
     }
 
-    private fun startCheckNotificationsWorker(action: String, id: Long) {
+    private fun startCheckNotificationsWorker(id: Long) {
         val data = Data.Builder()
-            .putString("action", action)
+            .putString("action", Constants.ACTION_DELETE)
             .putLong(Constants.NOTE_ID, id)
             .build()
         val workRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
             .addTag(Constants.WORKER_CHECK)
             .setInputData(data)
-            //.setInitialDelay(5, TimeUnit.MINUTES)
             .build()
         WorkManager.getInstance(App.instance).enqueue(workRequest)
     }

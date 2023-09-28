@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="colorPresets">
+        <item>@color/orange_50</item>
+        <item>@color/red_50</item>
+        <item>@color/pink_50</item>
+        <item>@color/purple_50</item>
+        <item>@color/deepPurple_50</item>
+        <item>@color/indigo_50</item>
+        <item>@color/blue_50</item>
+        <item>@color/lightBlue_50</item>
+        <item>@color/cyan_50</item>
+        <item>@color/teal_50</item>
+        <item>@color/green_50</item>
+        <item>@color/lightGreen_50</item>
+        <item>@color/lime_50</item>
+        <item>@color/yellow_50</item>
+        <item>@color/amber_50</item>
+        <item>@color/deepOrange_50</item>
+        <item>@color/brown_50</item>
+        <item>@color/grey_50</item>
+        <item>@color/blueGrey_50</item>
+
         <item>@color/orange_100</item>
         <item>@color/red_100</item>
         <item>@color/pink_100</item>
@@ -180,5 +200,73 @@
         <item>@color/brown_900</item>
         <item>@color/grey_900</item>
         <item>@color/blueGrey_900</item>
+
+        <item>@color/orange_A100</item>
+        <item>@color/red_A100</item>
+        <item>@color/pink_A100</item>
+        <item>@color/purple_A100</item>
+        <item>@color/deepPurple_A100</item>
+        <item>@color/indigo_A100</item>
+        <item>@color/blue_A100</item>
+        <item>@color/lightBlue_A100</item>
+        <item>@color/cyan_A100</item>
+        <item>@color/teal_A100</item>
+        <item>@color/green_A100</item>
+        <item>@color/lightGreen_A100</item>
+        <item>@color/lime_A100</item>
+        <item>@color/yellow_A100</item>
+        <item>@color/amber_A100</item>
+        <item>@color/deepOrange_A100</item>
+
+        <item>@color/orange_A200</item>
+        <item>@color/red_A200</item>
+        <item>@color/pink_A200</item>
+        <item>@color/purple_A200</item>
+        <item>@color/deepPurple_A200</item>
+        <item>@color/indigo_A200</item>
+        <item>@color/blue_A200</item>
+        <item>@color/lightBlue_A200</item>
+        <item>@color/cyan_A200</item>
+        <item>@color/teal_A200</item>
+        <item>@color/green_A200</item>
+        <item>@color/lightGreen_A200</item>
+        <item>@color/lime_A200</item>
+        <item>@color/yellow_A200</item>
+        <item>@color/amber_A200</item>
+        <item>@color/deepOrange_A200</item>
+
+        <item>@color/orange_A400</item>
+        <item>@color/red_A400</item>
+        <item>@color/pink_A400</item>
+        <item>@color/purple_A400</item>
+        <item>@color/deepPurple_A400</item>
+        <item>@color/indigo_A400</item>
+        <item>@color/blue_A400</item>
+        <item>@color/lightBlue_A400</item>
+        <item>@color/cyan_A400</item>
+        <item>@color/teal_A400</item>
+        <item>@color/green_A400</item>
+        <item>@color/lightGreen_A400</item>
+        <item>@color/lime_A400</item>
+        <item>@color/yellow_A400</item>
+        <item>@color/amber_A400</item>
+        <item>@color/deepOrange_A400</item>
+
+        <item>@color/orange_A700</item>
+        <item>@color/red_A700</item>
+        <item>@color/pink_A700</item>
+        <item>@color/purple_A700</item>
+        <item>@color/deepPurple_A700</item>
+        <item>@color/indigo_A700</item>
+        <item>@color/blue_A700</item>
+        <item>@color/lightBlue_A700</item>
+        <item>@color/cyan_A700</item>
+        <item>@color/teal_A700</item>
+        <item>@color/green_A700</item>
+        <item>@color/lightGreen_A700</item>
+        <item>@color/lime_A700</item>
+        <item>@color/yellow_A700</item>
+        <item>@color/amber_A700</item>
+        <item>@color/deepOrange_A700</item>
     </array>
 </resources>

@@ -4,6 +4,9 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
@@ -14,15 +17,17 @@ android {
         applicationId = "ru.bruimafia.donotforget"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
+        versionCode = 23
+        versionName = "2.1"
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "pixabay_lite-$versionName-code$versionCode")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -78,9 +83,6 @@ dependencies {
     // SDP - a scalable size unit / аналог папок dimens
     implementation("com.intuit.sdp:sdp-android:1.1.0")
 
-    // SmoothProgressBar
-    implementation("com.github.castorflex.smoothprogressbar:library:1.1.0")
-
     // Календарь и часы
     implementation("com.github.swnishan:materialdatetimepicker:1.0.0")
 
@@ -89,4 +91,30 @@ dependencies {
 
     // Кнопка с прогресс-баром
     implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
+
+    // Yandex AppMetrica SDK
+    implementation("io.appmetrica.analytics:analytics:6.0.0")
+
+    // Yandex Mobile Ads SDK
+    implementation("com.yandex.android:mobileads:6.0.1")
+
+    // OneSignal App SDK
+    implementation("com.onesignal:OneSignal:5.0.2")
+
+    // Google Play In-App Updates
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+
+    // Google Play In-App Review
+    implementation("com.google.android.play:review-ktx:2.0.1")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-perf-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
 }

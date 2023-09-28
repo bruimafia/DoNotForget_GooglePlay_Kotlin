@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:theme="@style/ToolbarTheme" >
+            app:theme="@style/ToolbarTheme">
 
             <Button
                 android:id="@+id/btn_recover"
@@ -73,113 +73,133 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_15sdp">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tl_title"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_note"
-                    app:textInputLayoutBoxStrokeColor="@{viewModel.note.color}"
-                    app:textInputLayoutHintTextColor="@{viewModel.note.color}"
+                    android:padding="@dimen/_15sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_title"
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tl_title"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine|textCapSentences"
-                        android:paddingStart="@dimen/_23sdp"
-                        android:paddingTop="@dimen/_30sdp"
-                        android:paddingEnd="@dimen/_23sdp"
-                        android:paddingBottom="@dimen/_30sdp"
-                        android:text="@={viewModel.note.title}"
-                        android:textColor="?attr/colorOnBackground"
-                        android:textCursorDrawable="@null"
-                        android:textSize="@dimen/_16sdp" />
+                        android:hint="@string/hint_note"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:textInputLayoutBoxStrokeColor="@{viewModel.note.color}"
+                        app:textInputLayoutHintTextColor="@{viewModel.note.color}">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:paddingStart="@dimen/_23sdp"
+                            android:paddingTop="@dimen/_30sdp"
+                            android:paddingEnd="@dimen/_23sdp"
+                            android:paddingBottom="@dimen/_30sdp"
+                            android:text="@={viewModel.note.title}"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/_16sdp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_date"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    ads:backgroundTint="?attr/backgroundColor"
-                    android:textColor="?attr/colorOnBackground"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:onClick="@{v -> view.onChooseDate()}"
-                    android:padding="@dimen/_15sdp"
-                    tools:text="@string/date"
-                    app:icon="@drawable/ic_calendar"
-                    app:iconTint="?attr/colorOnBackground"
-                    app:layout_constraintEnd_toStartOf="@id/btn_time"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tl_title"
-                    app:setDate="@{viewModel.note.date}" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_time"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    ads:backgroundTint="?attr/backgroundColor"
-                    android:textColor="?attr/colorOnBackground"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:onClick="@{v -> view.onChooseTime()}"
-                    android:padding="@dimen/_15sdp"
-                    tools:text="@string/time"
-                    app:icon="@drawable/ic_clock"
-                    app:iconTint="?attr/colorOnBackground"
-                    app:layout_constraintBaseline_toBaselineOf="@id/btn_date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btn_date"
-                    app:layout_constraintTop_toBottomOf="@id/tl_title"
-                    app:setTime="@{viewModel.note.date}" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_color"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="match_parent"
-                    android:textColor="?attr/colorOnBackground"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    app:btnChooseColorBackgroundTint="@{viewModel.note.color}"
-                    android:onClick="@{v -> view.onChooseColor()}"
-                    android:padding="@dimen/_15sdp"
-                    android:text="@string/btn_color_choose"
-                    app:layout_constraintTop_toBottomOf="@id/btn_date"
-                    app:textColorOnNote="@{viewModel.note.color}" />
-
-                <LinearLayout
-                    android:id="@+id/ll_fix"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/btn_color">
-
-                    <ToggleButton
-                        android:id="@+id/tb_fix"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_date"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/toggle_selector"
-                        android:checked="@={viewModel.note.fix}"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:onClick="@{v -> view.onChooseDate()}"
                         android:padding="@dimen/_15sdp"
                         android:textColor="?attr/colorOnBackground"
-                        android:textOff="@string/tbtn_text_off"
-                        android:textOn="@string/tbtn_text_on" />
+                        ads:backgroundTint="?attr/backgroundColor"
+                        app:icon="@drawable/ic_calendar"
+                        app:iconTint="?attr/colorOnBackground"
+                        app:layout_constraintEnd_toStartOf="@id/btn_time"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tl_title"
+                        app:setDate="@{viewModel.note.date}"
+                        tools:text="@string/date" />
 
-                    <View
-                        android:id="@+id/vFix"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_time"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:onClick="@{v -> view.onChooseTime()}"
+                        android:padding="@dimen/_15sdp"
+                        android:textColor="?attr/colorOnBackground"
+                        ads:backgroundTint="?attr/backgroundColor"
+                        app:icon="@drawable/ic_clock"
+                        app:iconTint="?attr/colorOnBackground"
+                        app:layout_constraintBaseline_toBaselineOf="@id/btn_date"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btn_date"
+                        app:layout_constraintTop_toBottomOf="@id/tl_title"
+                        app:setTime="@{viewModel.note.date}"
+                        tools:text="@string/time" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_color"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_3sdp"
-                        android:background="@color/base_variant"
-                        android:visibility="@{viewModel.note.fix ? View.VISIBLE : View.GONE}" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:onClick="@{v -> view.onChooseColor()}"
+                        android:padding="@dimen/_15sdp"
+                        android:text="@string/btn_color_choose"
+                        android:textColor="?attr/colorOnBackground"
+                        app:btnChooseColorBackgroundTint="@{viewModel.note.color}"
+                        app:layout_constraintTop_toBottomOf="@id/btn_date"
+                        app:textColorOnNote="@{viewModel.note.color}" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_fix"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/btn_color">
+
+                        <ToggleButton
+                            android:id="@+id/tb_fix"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/toggle_selector"
+                            android:checked="@={viewModel.note.fix}"
+                            android:padding="@dimen/_15sdp"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textOff="@string/tbtn_text_off"
+                            android:textOn="@string/tbtn_text_on" />
+
+                        <View
+                            android:id="@+id/vFix"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_3sdp"
+                            android:background="@color/base_variant"
+                            android:visibility="@{viewModel.note.fix ? View.VISIBLE : View.GONE}" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.yandex.mobile.ads.banner.BannerAdView
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    ads:layout_constraintEnd_toEndOf="parent"
+                    ads:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/frame" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,13 +1,12 @@
 package ru.bruimafia.donotforget.util
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.bruimafia.donotforget.databinding.NoteBinding
 import ru.bruimafia.donotforget.fragment.tasks.OnItemClickListener
 import ru.bruimafia.donotforget.repository.local.Note
+
 
 class NoteAdapter(private var listener: OnItemClickListener, private var list: MutableList<Note> = mutableListOf()) :
     RecyclerView.Adapter<NoteAdapter.NoteHolder>() {

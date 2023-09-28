@@ -16,6 +16,7 @@ import ru.bruimafia.donotforget.databinding.DialogAboutBinding
 import ru.bruimafia.donotforget.util.Constants
 import ru.bruimafia.donotforget.util.SharedPreferencesManager
 
+
 class AboutDialog : DialogFragment(), OnClickMethod {
 
     private lateinit var binding: DialogAboutBinding
@@ -32,7 +33,7 @@ class AboutDialog : DialogFragment(), OnClickMethod {
 
     override fun onVkLink() {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(String.format("linkedin://profile/%s", Constants.VK_ID))))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("linkedin://profile/%s" + Constants.VK_ID)))
         } catch (e: ActivityNotFoundException) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/id" + Constants.VK_ID)))
         }
