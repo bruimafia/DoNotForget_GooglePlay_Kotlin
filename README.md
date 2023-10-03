@@ -1,7 +1,7 @@
 # Приложение «Не забыть бы / Do Not Forget»
 Приложение в Google Play https://play.google.com/store/apps/details?id=ru.bruimafia.donotforget
 
-При разработке приложения использовался паттерн MVVM. В проекте присутствует работа с: Firebase (cloud firestore, message), Google (авторизация), Google In-App Billing (покупка полной версии и отключение рекламы), Room, SharedPreferences, Notification, AlarmManager, Broadcast Receivers, LiveData, DataBinding, WorkManager, Navigation Component, Coroutines. Проект написан на языке Kotlin.
+При разработке приложения использовался паттерн архитектуры MVVM. В проекте присутствует работа с: Firebase (cloud firestore, message), Google (авторизация), Google In-App Billing (покупка полной версии и отключение рекламы), Room, SharedPreferences, Notification, AlarmManager, Broadcast Receivers, LiveData, DataBinding, WorkManager, Navigation Component, Coroutines. Проект написан на языке Kotlin.
 
 «Не забыть бы» – как часто мы говорим себе эту фразу в надежде вспомнить о чём-то важном в нужный момент. И как часто мы всё-таки забываем об этом. Теперь Вы можете быть спокойны – мы обязательно обо всём Вам напомним.
 
