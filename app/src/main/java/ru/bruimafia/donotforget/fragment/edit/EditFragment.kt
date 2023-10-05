@@ -95,7 +95,8 @@ class EditFragment : Fragment(), OnClickMethod {
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 binding.banner.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                bannerAd = loadBannerAd(adSize)
+                if (!SharedPreferencesManager.isFullVersion)
+                    bannerAd = loadBannerAd(adSize)
             }
         })
 
@@ -115,7 +116,8 @@ class EditFragment : Fragment(), OnClickMethod {
     override fun onCreateNote(note: Note) {
         viewModel.create(note)
         navController.popBackStack()
-        showAd()
+        if (!SharedPreferencesManager.isFullVersion)
+            showAd()
     }
 
     override fun onUpdateNote(note: Note) {

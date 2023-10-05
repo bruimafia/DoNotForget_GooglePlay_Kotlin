@@ -97,7 +97,8 @@ class HistoryFragment : Fragment() {
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 binding.banner.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                bannerAd = loadBannerAd(adSize)
+                if (!SharedPreferencesManager.isFullVersion)
+                    bannerAd = loadBannerAd(adSize)
             }
         })
     }
