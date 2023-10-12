@@ -17,8 +17,8 @@ android {
         applicationId = "ru.bruimafia.donotforget"
         minSdk = 24
         targetSdk = 34
-        versionCode = 24
-        versionName = "2.2"
+        versionCode = 25
+        versionName = "2.3"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "pixabay_lite-$versionName-code$versionCode")
@@ -53,7 +53,7 @@ android {
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")

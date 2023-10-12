@@ -25,7 +25,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener
 import com.android.billingclient.api.BillingClient
@@ -47,7 +49,6 @@ import com.yandex.mobile.ads.common.ImpressionData
 import ru.bruimafia.donotforget.App
 import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.databinding.FragmentTasksBinding
-import ru.bruimafia.donotforget.repository.local.Note
 import ru.bruimafia.donotforget.util.Constants
 import ru.bruimafia.donotforget.util.NoteAdapter
 import ru.bruimafia.donotforget.util.Security
@@ -117,26 +118,19 @@ class TasksFragment : Fragment(), OnClickOptionsMenu, PurchasesUpdatedListener {
             }
         }
 
-        adapter = NoteAdapter(object : OnItemClickListener {
-            override fun onItemClick(note: Note) {
-                val action = TasksFragmentDirections.actionTasksFragmentToEditFragment(note.id)
-                navController.navigate(action)
-            }
-
-            override fun onItemLongClick(note: Note): Boolean {
-                showDeleteDialog(note.id)
-                return true
-            }
-        })
+        adapter = NoteAdapter()
         binding.recycler.layoutManager = LinearLayoutManager(view.context)
         binding.recycler.itemAnimator = DefaultItemAnimator()
         binding.recycler.adapter = adapter
+        setShopItemLongClickListener()
+        setShopItemClickListener()
+        setCallback(binding.recycler)
 
         viewModel.isOrderById.set(SharedPreferencesManager.isOrderById)
 
         viewModel.getNotes().observe(viewLifecycleOwner) {
             viewModel.isLoading.set(true)
-            adapter.setData(it.toMutableList())
+            adapter.submitList(it)
             viewModel.notesForScreen.set(it)
             viewModel.isLoading.set(false)
         }
@@ -186,6 +180,38 @@ class TasksFragment : Fragment(), OnClickOptionsMenu, PurchasesUpdatedListener {
             Log.d(Constants.TAG, "Purchase Status : Not Purchased")
 
 
+    }
+
+    private fun setCallback(rv: RecyclerView) {
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = adapter.currentList[viewHolder.adapterPosition]
+                viewModel.delete(item.id)
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(rv)
+    }
+
+    private fun setShopItemClickListener() {
+        adapter.onNoteItemClickListener = {
+            val action = TasksFragmentDirections.actionTasksFragmentToEditFragment(it.id)
+            navController.navigate(action)
+        }
+    }
+
+    private fun setShopItemLongClickListener() {
+        adapter.onNoteItemLongClickListener = {
+            showDeleteDialog(it.id)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -268,7 +294,7 @@ class TasksFragment : Fragment(), OnClickOptionsMenu, PurchasesUpdatedListener {
 
         viewModel.getNotes().observe(viewLifecycleOwner) {
             viewModel.isLoading.set(true)
-            adapter.setData(it.toMutableList())
+            adapter.submitList(it)
             viewModel.notesForScreen.set(it)
             viewModel.isLoading.set(false)
         }
