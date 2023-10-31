@@ -29,6 +29,7 @@ import ru.bruimafia.donotforget.R
 import ru.bruimafia.donotforget.databinding.FragmentHistoryBinding
 import ru.bruimafia.donotforget.util.NoteAdapter
 import ru.bruimafia.donotforget.util.SharedPreferencesManager
+import java.lang.RuntimeException
 import kotlin.math.roundToInt
 
 
@@ -37,7 +38,9 @@ class HistoryFragment : Fragment() {
     private val viewModel: HistoryViewModel by viewModels {
         HistoryViewModelFactory((App.instance).repository)
     }
-    private lateinit var binding: FragmentHistoryBinding
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding: FragmentHistoryBinding
+        get() = _binding ?: throw RuntimeException("FragmentHistoryBinding == null")
     private lateinit var navController: NavController
     private lateinit var adapter: NoteAdapter
 
@@ -54,7 +57,7 @@ class HistoryFragment : Fragment() {
         }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
         return binding.root
     }
 
@@ -155,4 +158,8 @@ class HistoryFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

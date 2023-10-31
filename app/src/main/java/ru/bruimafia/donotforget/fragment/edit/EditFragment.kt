@@ -45,7 +45,9 @@ class EditFragment : Fragment(), OnClickMethod {
 
     private val args: EditFragmentArgs by navArgs()
     private val viewModel: EditViewModel by viewModels { EditViewModelFactory((App.instance).repository) }
-    private lateinit var binding: FragmentEditBinding
+    private var _binding: FragmentEditBinding? = null
+    private val binding: FragmentEditBinding
+        get() = _binding ?: throw RuntimeException("FragmentEditBinding == null")
     private lateinit var navController: NavController
     private var id: Long = -1L
 
@@ -72,7 +74,7 @@ class EditFragment : Fragment(), OnClickMethod {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
         return binding.root
     }
 
@@ -216,6 +218,11 @@ class EditFragment : Fragment(), OnClickMethod {
     private fun destroyInterstitialAd() {
         interstitialAd?.setAdEventListener(null)
         interstitialAd = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDestroy() {

@@ -62,7 +62,9 @@ class TasksFragment : Fragment(), OnClickOptionsMenu, PurchasesUpdatedListener {
     private val viewModel: TasksViewModel by viewModels {
         TasksViewModelFactory((App.instance).repository)
     }
-    private lateinit var binding: FragmentTasksBinding
+    private var _binding: FragmentTasksBinding? = null
+    private val binding: FragmentTasksBinding
+        get() = _binding ?: throw RuntimeException("FragmentTasksBinding == null")
     private lateinit var navController: NavController
     private lateinit var adapter: NoteAdapter
     private lateinit var billingClient: BillingClient
@@ -92,7 +94,7 @@ class TasksFragment : Fragment(), OnClickOptionsMenu, PurchasesUpdatedListener {
         }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
         return binding.root
     }
@@ -480,6 +482,11 @@ class TasksFragment : Fragment(), OnClickOptionsMenu, PurchasesUpdatedListener {
             else -> "An unknown error occurred."
         }
         Log.d(Constants.TAG, errorMessage)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDestroy() {
